@@ -243,6 +243,220 @@
       color: var(--muted);
     }
 
+
+    .motion-scene {
+      position: relative;
+      display: grid;
+      grid-template-columns: 86px minmax(0, 1fr);
+      gap: 12px;
+      align-items: center;
+      min-height: 86px;
+      padding: 10px;
+      border: 1px solid rgba(15, 118, 110, 0.16);
+      border-radius: 8px;
+      background: linear-gradient(135deg, #f7fffc 0%, #fffaf1 100%);
+      overflow: hidden;
+    }
+
+    .motion-stage {
+      position: relative;
+      display: grid;
+      place-items: center;
+      width: 72px;
+      height: 62px;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.72);
+    }
+
+    .motion-shadow {
+      position: absolute;
+      bottom: 7px;
+      width: 42px;
+      height: 7px;
+      border-radius: 50%;
+      background: rgba(25, 33, 42, 0.14);
+      transform-origin: center;
+      animation: shadowPulse 1.8s ease-in-out infinite;
+    }
+
+    .kana-body {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      place-items: center;
+      min-width: 42px;
+      min-height: 46px;
+      color: var(--accent);
+      font-weight: 900;
+      transform-origin: 50% 88%;
+      animation: bodyPulse 1.8s ease-in-out infinite;
+    }
+
+    .kana-head,
+    .kana-core,
+    .kana-feet {
+      display: block;
+      line-height: 1;
+      letter-spacing: 0;
+      text-align: center;
+    }
+
+    .kana-head {
+      min-width: 24px;
+      padding: 3px 5px;
+      border: 2px solid currentColor;
+      border-radius: 999px;
+      background: #ffffff;
+      font-size: 0.82rem;
+    }
+
+    .kana-core {
+      margin-top: -1px;
+      font-size: 1.05rem;
+    }
+
+    .kana-feet {
+      margin-top: -2px;
+      color: var(--accent-2);
+      font-size: 0.78rem;
+    }
+
+    .motion-trail {
+      position: absolute;
+      top: 3px;
+      right: 4px;
+      color: rgba(180, 83, 9, 0.62);
+      font-size: 0.72rem;
+      font-weight: 800;
+      letter-spacing: 0;
+      writing-mode: vertical-rl;
+      animation: trailFloat 2.2s ease-in-out infinite;
+    }
+
+    .motion-caption {
+      min-width: 0;
+      color: var(--muted);
+      font-size: 0.82rem;
+      line-height: 1.45;
+    }
+
+    .motion-caption strong {
+      display: block;
+      color: var(--ink);
+      font-size: 0.88rem;
+    }
+
+    .motion-scene.walk .kana-body,
+    .motion-scene.go .kana-body,
+    .motion-scene.return .kana-body,
+    .motion-scene.run .kana-body {
+      animation-name: walkCycle;
+    }
+
+    .motion-scene.open .kana-core { animation: openArms 1.5s ease-in-out infinite; }
+    .motion-scene.close .kana-core { animation: closeArms 1.5s ease-in-out infinite; }
+    .motion-scene.lift .kana-body { animation-name: liftBody; }
+    .motion-scene.drop .kana-body { animation-name: dropBody; }
+    .motion-scene.speak .kana-head { animation: speakMouth 0.72s ease-in-out infinite; }
+    .motion-scene.listen .kana-head { animation: listenTilt 1.4s ease-in-out infinite; }
+    .motion-scene.eat .kana-head { animation: eatNod 0.9s ease-in-out infinite; }
+    .motion-scene.drink .kana-body { animation-name: drinkTilt; }
+    .motion-scene.sleep .kana-body { animation-name: sleepSway; }
+    .motion-scene.sleep .motion-trail::after { content: " zzz"; }
+    .motion-scene.search .motion-trail { animation-name: scanTrail; }
+    .motion-scene.write .kana-core { animation: writeStroke 1.2s ease-in-out infinite; }
+    .motion-scene.cut .kana-core { animation: cutSnap 1s ease-in-out infinite; }
+    .motion-scene.clean .kana-body { animation-name: scrubBody; }
+    .motion-scene.ride .kana-body { animation-name: rideBounce; }
+    .motion-scene.fly .kana-body { animation-name: flyBody; }
+    .motion-scene.rain .motion-trail { animation-name: rainFall; }
+    .motion-scene.turn .kana-body { animation-name: turnBody; }
+    .motion-scene.wait .kana-body { animation-name: waitBody; }
+    .motion-scene.hold .kana-core { animation: holdGrip 1.2s ease-in-out infinite; }
+    .motion-scene.think .kana-head { animation: thinkBob 1.7s ease-in-out infinite; }
+    .motion-scene.gather .motion-trail { animation-name: gatherTrail; }
+    .motion-scene.throw .kana-body { animation-name: throwBody; }
+    .motion-scene.catch .kana-core { animation: catchGrip 1.1s ease-in-out infinite; }
+    .motion-scene.break .kana-body { animation-name: breakJolt; }
+    .motion-scene.fix .kana-core { animation: fixTap 0.9s ease-in-out infinite; }
+    .motion-scene.pay .kana-body { animation-name: payBow; }
+    .motion-scene.shine .motion-trail { animation-name: sparkleTrail; }
+    .motion-scene.dance .kana-body { animation-name: danceBody; }
+    .motion-scene.cry .kana-head { animation: cryShake 0.9s ease-in-out infinite; }
+    .motion-scene.laugh .kana-head { animation: laughBounce 0.8s ease-in-out infinite; }
+    .motion-scene.help .kana-core { animation: helpWave 1.1s ease-in-out infinite; }
+    .motion-scene.invite .kana-core { animation: inviteWave 1.2s ease-in-out infinite; }
+    .motion-scene.fish .kana-body { animation-name: fishCast; }
+    .motion-scene.cook .kana-body { animation-name: cookFlip; }
+    .motion-scene.bloom .motion-trail { animation-name: bloomTrail; }
+
+    @keyframes bodyPulse {
+      0%, 100% { transform: translateY(0) scale(1); }
+      50% { transform: translateY(-4px) scale(1.04); }
+    }
+
+    @keyframes shadowPulse {
+      0%, 100% { transform: scaleX(1); opacity: 0.6; }
+      50% { transform: scaleX(0.72); opacity: 0.35; }
+    }
+
+    @keyframes trailFloat {
+      0%, 100% { transform: translateY(0); opacity: 0.48; }
+      50% { transform: translateY(-7px); opacity: 0.9; }
+    }
+
+    @keyframes walkCycle {
+      0%, 100% { transform: translateX(-8px) rotate(-6deg); }
+      50% { transform: translateX(8px) rotate(6deg); }
+    }
+
+    @keyframes openArms { 0%, 100% { transform: scaleX(0.72); } 50% { transform: scaleX(1.55); } }
+    @keyframes closeArms { 0%, 100% { transform: scaleX(1.45); } 50% { transform: scaleX(0.68); } }
+    @keyframes liftBody { 0%, 100% { transform: translateY(4px); } 50% { transform: translateY(-16px); } }
+    @keyframes dropBody { 0%, 100% { transform: translateY(-10px); } 55% { transform: translateY(9px) rotate(5deg); } }
+    @keyframes speakMouth { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.16, 0.82); } }
+    @keyframes listenTilt { 0%, 100% { transform: rotate(-10deg); } 50% { transform: rotate(12deg); } }
+    @keyframes eatNod { 0%, 100% { transform: translateY(0) scale(1); } 45% { transform: translateY(5px) scale(1.08); } }
+    @keyframes drinkTilt { 0%, 100% { transform: rotate(0deg); } 50% { transform: rotate(-18deg); } }
+    @keyframes sleepSway { 0%, 100% { transform: translateY(2px) rotate(-7deg); } 50% { transform: translateY(-3px) rotate(7deg); } }
+    @keyframes scanTrail { 0%, 100% { transform: translateX(-12px); opacity: 0.35; } 50% { transform: translateX(10px); opacity: 1; } }
+    @keyframes writeStroke { 0%, 100% { transform: translateX(-5px) rotate(-8deg); } 50% { transform: translateX(7px) rotate(8deg); } }
+    @keyframes cutSnap { 0%, 100% { transform: rotate(-18deg) scaleX(1.25); } 50% { transform: rotate(18deg) scaleX(0.72); } }
+    @keyframes scrubBody { 0%, 100% { transform: translateX(-5px) rotate(-5deg); } 50% { transform: translateX(5px) rotate(5deg); } }
+    @keyframes rideBounce { 0%, 100% { transform: translateX(-5px) translateY(2px); } 50% { transform: translateX(7px) translateY(-7px); } }
+    @keyframes flyBody { 0%, 100% { transform: translate(-10px, 5px) rotate(-8deg); } 50% { transform: translate(12px, -13px) rotate(10deg); } }
+    @keyframes rainFall { 0% { transform: translateY(-12px); opacity: 0.2; } 100% { transform: translateY(18px); opacity: 0.9; } }
+    @keyframes turnBody { 0%, 100% { transform: rotate(-18deg); } 50% { transform: rotate(18deg); } }
+    @keyframes waitBody { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-2px); } }
+    @keyframes holdGrip { 0%, 100% { transform: scaleX(0.9); } 50% { transform: scaleX(1.32); } }
+    @keyframes thinkBob { 0%, 100% { transform: translateY(0) rotate(-4deg); } 50% { transform: translateY(-6px) rotate(6deg); } }
+    @keyframes gatherTrail { 0%, 100% { transform: scale(0.86); opacity: 0.35; } 50% { transform: scale(1.22); opacity: 1; } }
+    @keyframes throwBody { 0%, 100% { transform: rotate(-18deg) translateX(-4px); } 55% { transform: rotate(24deg) translateX(9px); } }
+    @keyframes catchGrip { 0%, 100% { transform: scale(1.35); } 50% { transform: scale(0.82); } }
+    @keyframes breakJolt { 0%, 100% { transform: rotate(0); } 20% { transform: rotate(-16deg); } 45% { transform: rotate(18deg); } 70% { transform: rotate(-8deg); } }
+    @keyframes fixTap { 0%, 100% { transform: translateY(0); } 35% { transform: translateY(5px) rotate(-8deg); } }
+    @keyframes payBow { 0%, 100% { transform: rotate(0deg); } 50% { transform: rotate(18deg) translateY(4px); } }
+    @keyframes sparkleTrail { 0%, 100% { transform: scale(0.9) rotate(0); opacity: 0.5; } 50% { transform: scale(1.35) rotate(12deg); opacity: 1; } }
+    @keyframes danceBody { 0%, 100% { transform: translateX(-6px) rotate(-14deg); } 50% { transform: translateX(6px) rotate(14deg); } }
+    @keyframes cryShake { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-3px); } 75% { transform: translateX(3px); } }
+    @keyframes laughBounce { 0%, 100% { transform: translateY(0) scale(1); } 50% { transform: translateY(-5px) scale(1.12); } }
+    @keyframes helpWave { 0%, 100% { transform: rotate(-12deg); } 50% { transform: rotate(16deg); } }
+    @keyframes inviteWave { 0%, 100% { transform: translateX(6px) rotate(12deg); } 50% { transform: translateX(-6px) rotate(-12deg); } }
+    @keyframes fishCast { 0%, 100% { transform: rotate(-20deg) translateX(-5px); } 50% { transform: rotate(24deg) translateX(6px); } }
+    @keyframes cookFlip { 0%, 100% { transform: rotate(-8deg) translateY(2px); } 50% { transform: rotate(14deg) translateY(-8px); } }
+    @keyframes bloomTrail { 0%, 100% { transform: scale(0.72); opacity: 0.45; } 50% { transform: scale(1.45); opacity: 1; } }
+
+    @media (prefers-reduced-motion: reduce) {
+      .kana-body,
+      .kana-head,
+      .kana-core,
+      .kana-feet,
+      .motion-trail,
+      .motion-shadow {
+        animation: none !important;
+      }
+    }
+
     .hidden .translation,
     .hidden .sentence,
     .hidden .phrases {
@@ -284,7 +498,7 @@
 <body>
   <header>
     <h1>JLPT Verb Vocabulary</h1>
-    <p class="subtitle">Expanded N5 and N4 verb study-list flashcards with furigana, Chinese translations, short example sentences, and practical phrase chunks for fast review.</p>
+    <p class="subtitle">Expanded N5 and N4 verb study-list flashcards with animated furigana action cues, Chinese translations, short example sentences, and practical phrase chunks for fast review.</p>
   </header>
 
   <main>
@@ -303,7 +517,7 @@
 
     <section class="stats" aria-live="polite">
       <span class="stat" id="count">0 verbs</span>
-      <span class="stat">Expanded study-list deck</span><span class="stat">Click Hide for flashcard practice</span>
+      <span class="stat">Expanded study-list deck</span><span class="stat">Animated furigana cues</span><span class="stat">Click Hide for flashcard practice</span>
     </section>
 
     <section id="grid" class="grid" aria-label="Verb cards"></section>
@@ -321,6 +535,18 @@
       </div>
       <p class="translation"></p>
       <div class="meta"></div>
+      <div class="motion-scene">
+        <div class="motion-stage" aria-hidden="true">
+          <span class="motion-shadow"></span>
+          <span class="kana-body">
+            <span class="kana-head"></span>
+            <span class="kana-core"></span>
+            <span class="kana-feet"></span>
+          </span>
+          <span class="motion-trail"></span>
+        </div>
+        <p class="motion-caption"></p>
+      </div>
       <div class="block">
         <span class="label">Example</span>
         <p class="sentence"></p>
@@ -2678,6 +2904,79 @@
       return text.toLowerCase().replace(/\s+/g, "");
     }
 
+
+
+    const motionRules = [
+      { type: "sleep", label: "sleepy sway", words: ["寝", "眠"] },
+      { type: "eat", label: "eating nod", words: ["食べ"] },
+      { type: "drink", label: "drink tilt", words: ["飲", "浴び"] },
+      { type: "speak", label: "speaking mouth", words: ["言", "話", "申", "申し", "説明", "紹介", "知らせ", "伝"] },
+      { type: "listen", label: "listening tilt", words: ["聞", "尋ね", "相談"] },
+      { type: "write", label: "writing stroke", words: ["書", "写", "コピー", "チェック"] },
+      { type: "cut", label: "cutting snap", words: ["切", "割", "折"] },
+      { type: "clean", label: "scrub motion", words: ["洗", "磨", "塗", "片付", "直", "治", "汚"] },
+      { type: "open", label: "opening arms", words: ["開", "出", "始め", "始ま"] },
+      { type: "close", label: "closing arms", words: ["閉", "仕舞", "止め", "止ま", "止む", "終"] },
+      { type: "lift", label: "lifting up", words: ["上", "立", "登", "増", "育", "建", "植", "祈"] },
+      { type: "drop", label: "falling down", words: ["下", "降", "落", "倒", "痩", "死", "亡"] },
+      { type: "go", label: "stepping forward", words: ["行", "歩", "出かけ", "進", "渡", "来", "参", "寄"] },
+      { type: "return", label: "turning back", words: ["帰", "返", "戻"] },
+      { type: "run", label: "quick steps", words: ["急", "逃", "間に合"] },
+      { type: "ride", label: "ride bounce", words: ["乗", "泊", "引っ越", "移"] },
+      { type: "fly", label: "flying arc", words: ["飛"] },
+      { type: "rain", label: "falling drops", words: ["降る", "曇", "冷", "乾", "沸"] },
+      { type: "turn", label: "turning body", words: ["曲", "変", "取り替", "違", "間違"] },
+      { type: "wait", label: "patient pause", words: ["待", "要", "足り", "慣"] },
+      { type: "hold", label: "holding grip", words: ["持", "取", "撮", "入", "置", "押", "引", "使", "着", "脱", "選", "用意", "準備"] },
+      { type: "think", label: "thinking bob", words: ["考", "思い出", "覚", "忘", "知", "分か", "決"] },
+      { type: "search", label: "search scan", words: ["探", "調べ", "見", "見つ"] },
+      { type: "gather", label: "gathering in", words: ["集", "並", "会", "合"] },
+      { type: "throw", label: "throwing arc", words: ["投", "打", "捨", "出す"] },
+      { type: "catch", label: "catch and hold", words: ["捕", "受", "拾", "借", "貸", "渡", "届け", "くれ"] },
+      { type: "break", label: "jolt break", words: ["壊", "失敗", "驚", "騒", "叱", "困", "盗"] },
+      { type: "fix", label: "repair tap", words: ["助", "手伝", "役に立", "頑張"] },
+      { type: "pay", label: "paying bow", words: ["払", "買", "売", "注文", "頼"] },
+      { type: "shine", label: "spark cue", words: ["光", "安心", "喜"] },
+      { type: "dance", label: "dance sway", words: ["踊", "遊", "楽し", "歌", "弾", "泳", "釣"] },
+      { type: "cry", label: "cry shake", words: ["泣", "謝", "負"] },
+      { type: "laugh", label: "laugh bounce", words: ["笑", "褒"] },
+      { type: "invite", label: "inviting wave", words: ["誘", "招待", "案内", "迎", "呼", "訪"] },
+      { type: "cook", label: "cooking flip", words: ["作", "焼"] },
+      { type: "bloom", label: "bloom pulse", words: ["咲", "生ま", "生き", "住", "生活"] }
+    ];
+
+    function kanaParts(kana) {
+      const chars = Array.from(kana || "する");
+      const groups = [];
+      chars.forEach((char) => {
+        if ("ゃゅょぁぃぅぇぉャュョァィゥェォー".includes(char) && groups.length) {
+          groups[groups.length - 1] += char;
+        } else {
+          groups.push(char);
+        }
+      });
+      return groups.length ? groups : [kana || "す"];
+    }
+
+    function motionFor(verb) {
+      const corpus = `${verb.kanji}${verb.kana}${verb.zh}${verb.example}${verb.phrases}`;
+      return motionRules.find((rule) => rule.words.some((word) => corpus.includes(word))) || {
+        type: "walk",
+        label: "basic action"
+      };
+    }
+
+    function applyMotion(scene, verb) {
+      const motion = motionFor(verb);
+      const parts = kanaParts(verb.kana);
+      scene.className = `motion-scene ${motion.type}`;
+      scene.querySelector(".kana-head").textContent = parts[0];
+      scene.querySelector(".kana-core").textContent = parts.slice(1, -1).join("") || parts[0];
+      scene.querySelector(".kana-feet").textContent = parts.length > 1 ? parts[parts.length - 1] : parts[0];
+      scene.querySelector(".motion-trail").textContent = verb.kana;
+      scene.querySelector(".motion-caption").innerHTML = `<strong>${motion.label}</strong>furigana body cue: ${verb.kana}`;
+    }
+
     function render() {
       const q = normalize(search.value);
       visibleVerbs = verbs.filter((verb) => {
@@ -2699,6 +2998,7 @@
         node.querySelector(".level").classList.toggle("n4", verb.level === "N4");
         node.querySelector(".sentence").textContent = `${verb.example} ${verb.exZh}`;
         node.querySelector(".phrases").textContent = verb.phrases;
+        applyMotion(node.querySelector(".motion-scene"), verb);
 
         const meta = node.querySelector(".meta");
         [verb.type, verb.level === "N5" ? "basic verb" : "core verb"].forEach((item) => {
