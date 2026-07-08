@@ -1,0 +1,2745 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>JLPT N5/N4 Verb Vocabulary</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #19212a;
+      --muted: #637083;
+      --line: #d9dee7;
+      --paper: #fbfcfe;
+      --panel: #ffffff;
+      --accent: #0f766e;
+      --accent-2: #b45309;
+      --soft: #e8f5f2;
+      --soft-2: #fff5e6;
+      --shadow: 0 14px 38px rgba(25, 33, 42, 0.09);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Segoe UI", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      color: var(--ink);
+      background:
+        linear-gradient(180deg, rgba(232, 245, 242, 0.7), rgba(251, 252, 254, 0) 330px),
+        var(--paper);
+    }
+
+    header {
+      max-width: 1160px;
+      margin: 0 auto;
+      padding: 34px 20px 20px;
+    }
+
+    h1 {
+      margin: 0 0 8px;
+      font-size: clamp(2rem, 5vw, 4.2rem);
+      line-height: 1;
+      letter-spacing: 0;
+    }
+
+    .subtitle {
+      max-width: 720px;
+      margin: 0;
+      color: var(--muted);
+      font-size: 1rem;
+      line-height: 1.6;
+    }
+
+    main {
+      max-width: 1160px;
+      margin: 0 auto;
+      padding: 0 20px 44px;
+    }
+
+    .toolbar {
+      position: sticky;
+      top: 0;
+      z-index: 5;
+      display: grid;
+      grid-template-columns: minmax(210px, 1fr) auto auto;
+      gap: 12px;
+      align-items: center;
+      padding: 14px 0;
+      margin-bottom: 12px;
+      background: rgba(251, 252, 254, 0.92);
+      backdrop-filter: blur(12px);
+    }
+
+    .search {
+      width: 100%;
+      min-height: 44px;
+      padding: 10px 14px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel);
+      color: var(--ink);
+      font: inherit;
+    }
+
+    .search:focus {
+      outline: 3px solid rgba(15, 118, 110, 0.18);
+      border-color: var(--accent);
+    }
+
+    .segmented,
+    .actions {
+      display: flex;
+      gap: 6px;
+      align-items: center;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 4px;
+      background: var(--panel);
+    }
+
+    button {
+      min-height: 34px;
+      border: 0;
+      border-radius: 6px;
+      padding: 8px 11px;
+      color: var(--ink);
+      background: transparent;
+      font: 600 0.9rem/1 "Segoe UI", system-ui, sans-serif;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #eef1f5;
+    }
+
+    button.active {
+      color: #fff;
+      background: var(--accent);
+    }
+
+    .actions button {
+      color: var(--accent);
+    }
+
+    .stats {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 0 0 18px;
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
+    .stat {
+      padding: 7px 10px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel);
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 14px;
+      align-items: stretch;
+    }
+
+    .card {
+      display: grid;
+      gap: 12px;
+      min-height: 310px;
+      padding: 16px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel);
+      box-shadow: var(--shadow);
+    }
+
+    .card-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: start;
+    }
+
+    .level {
+      flex: 0 0 auto;
+      padding: 5px 8px;
+      border-radius: 999px;
+      color: #064e3b;
+      background: var(--soft);
+      font-size: 0.78rem;
+      font-weight: 700;
+    }
+
+    .level.n4 {
+      color: #7c2d12;
+      background: var(--soft-2);
+    }
+
+    .verb {
+      margin: 0;
+      font-size: 2rem;
+      line-height: 1.15;
+      letter-spacing: 0;
+      word-break: keep-all;
+    }
+
+    rt {
+      color: var(--muted);
+      font-size: 0.45em;
+      font-weight: 500;
+    }
+
+    .kana {
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .translation {
+      margin: 0;
+      font-size: 1.12rem;
+      font-weight: 700;
+    }
+
+    .meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+    }
+
+    .chip {
+      padding: 5px 8px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      color: var(--muted);
+      background: #f7f8fa;
+      font-size: 0.78rem;
+      font-weight: 600;
+    }
+
+    .block {
+      display: grid;
+      gap: 5px;
+    }
+
+    .label {
+      color: var(--muted);
+      font-size: 0.78rem;
+      font-weight: 800;
+      text-transform: uppercase;
+    }
+
+    .sentence,
+    .phrases {
+      margin: 0;
+      line-height: 1.55;
+    }
+
+    .phrases {
+      color: var(--muted);
+    }
+
+    .hidden .translation,
+    .hidden .sentence,
+    .hidden .phrases {
+      filter: blur(6px);
+      user-select: none;
+    }
+
+    .empty {
+      display: none;
+      padding: 28px;
+      border: 1px dashed var(--line);
+      border-radius: 8px;
+      color: var(--muted);
+      background: var(--panel);
+      text-align: center;
+    }
+
+    .empty.show {
+      display: block;
+    }
+
+    @media (max-width: 760px) {
+      .toolbar {
+        grid-template-columns: 1fr;
+      }
+
+      .segmented,
+      .actions {
+        width: 100%;
+        justify-content: stretch;
+      }
+
+      button {
+        flex: 1;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>JLPT Verb Vocabulary</h1>
+    <p class="subtitle">Expanded N5 and N4 verb study-list flashcards with furigana, Chinese translations, short example sentences, and practical phrase chunks for fast review.</p>
+  </header>
+
+  <main>
+    <section class="toolbar" aria-label="Vocabulary controls">
+      <input id="search" class="search" type="search" placeholder="Search Japanese, kana, English, Chinese, phrases..." autocomplete="off">
+      <div class="segmented" aria-label="JLPT level filter">
+        <button class="active" type="button" data-level="all">All</button>
+        <button type="button" data-level="N5">N5</button>
+        <button type="button" data-level="N4">N4</button>
+      </div>
+      <div class="actions" aria-label="Study controls">
+        <button id="shuffle" type="button" title="Shuffle cards">Shuffle</button>
+        <button id="toggleAnswers" type="button" title="Hide or show answers">Hide</button>
+      </div>
+    </section>
+
+    <section class="stats" aria-live="polite">
+      <span class="stat" id="count">0 verbs</span>
+      <span class="stat">Expanded study-list deck</span><span class="stat">Click Hide for flashcard practice</span>
+    </section>
+
+    <section id="grid" class="grid" aria-label="Verb cards"></section>
+    <section id="empty" class="empty">No verbs match this search.</section>
+  </main>
+
+  <template id="cardTemplate">
+    <article class="card">
+      <div class="card-head">
+        <div>
+          <h2 class="verb"></h2>
+          <div class="kana"></div>
+        </div>
+        <span class="level"></span>
+      </div>
+      <p class="translation"></p>
+      <div class="meta"></div>
+      <div class="block">
+        <span class="label">Example</span>
+        <p class="sentence"></p>
+      </div>
+      <div class="block">
+        <span class="label">Short phrases</span>
+        <p class="phrases"></p>
+      </div>
+    </article>
+  </template>
+
+  <script>
+    const verbs = [
+      {
+            "level": "N5",
+            "kanji": "会う",
+            "kana": "あう",
+            "zh": "见面",
+            "type": "Godan",
+            "example": "駅で友だちに会います。",
+            "exZh": "在车站见朋友。",
+            "phrases": "友だちに会う / また会う"
+      },
+      {
+            "level": "N5",
+            "kanji": "開く",
+            "kana": "あく",
+            "zh": "打开；开着",
+            "type": "Godan",
+            "example": "店は十時に開きます。",
+            "exZh": "店十点开门。",
+            "phrases": "ドアが開く / 店が開く"
+      },
+      {
+            "level": "N5",
+            "kanji": "開ける",
+            "kana": "あける",
+            "zh": "打开",
+            "type": "Ichidan",
+            "example": "窓を開けてください。",
+            "exZh": "请打开窗户。",
+            "phrases": "ドアを開ける / 箱を開ける"
+      },
+      {
+            "level": "N5",
+            "kanji": "上げる",
+            "kana": "あげる",
+            "zh": "举起；给",
+            "type": "Ichidan",
+            "example": "手を上げてください。",
+            "exZh": "请举手。",
+            "phrases": "手を上げる / プレゼントを上げる"
+      },
+      {
+            "level": "N5",
+            "kanji": "遊ぶ",
+            "kana": "あそぶ",
+            "zh": "玩",
+            "type": "Godan",
+            "example": "公園で遊びます。",
+            "exZh": "在公园玩。",
+            "phrases": "友だちと遊ぶ / 外で遊ぶ"
+      },
+      {
+            "level": "N5",
+            "kanji": "浴びる",
+            "kana": "あびる",
+            "zh": "淋；沐浴",
+            "type": "Ichidan",
+            "example": "朝、シャワーを浴びます。",
+            "exZh": "早上淋浴。",
+            "phrases": "シャワーを浴びる / 光を浴びる"
+      },
+      {
+            "level": "N5",
+            "kanji": "洗う",
+            "kana": "あらう",
+            "zh": "洗",
+            "type": "Godan",
+            "example": "手を洗います。",
+            "exZh": "洗手。",
+            "phrases": "顔を洗う / 皿を洗う"
+      },
+      {
+            "level": "N5",
+            "kanji": "ある",
+            "kana": "ある",
+            "zh": "有；存在（物）",
+            "type": "Godan",
+            "example": "机の上に本があります。",
+            "exZh": "桌上有书。",
+            "phrases": "時間がある / お金がある"
+      },
+      {
+            "level": "N5",
+            "kanji": "歩く",
+            "kana": "あるく",
+            "zh": "走路",
+            "type": "Godan",
+            "example": "学校まで歩きます。",
+            "exZh": "走路去学校。",
+            "phrases": "道を歩く / ゆっくり歩く"
+      },
+      {
+            "level": "N5",
+            "kanji": "言う",
+            "kana": "いう",
+            "zh": "说",
+            "type": "Godan",
+            "example": "先生にありがとうと言います。",
+            "exZh": "对老师说谢谢。",
+            "phrases": "名前を言う / はっきり言う"
+      },
+      {
+            "level": "N5",
+            "kanji": "行く",
+            "kana": "いく",
+            "zh": "去",
+            "type": "Godan",
+            "example": "明日、日本へ行きます。",
+            "exZh": "明天去日本。",
+            "phrases": "学校へ行く / 買い物に行く"
+      },
+      {
+            "level": "N5",
+            "kanji": "急ぐ",
+            "kana": "いそぐ",
+            "zh": "赶快",
+            "type": "Godan",
+            "example": "時間がないので急ぎます。",
+            "exZh": "因为没时间，所以赶快。",
+            "phrases": "駅へ急ぐ / 急いで行く"
+      },
+      {
+            "level": "N5",
+            "kanji": "要る",
+            "kana": "いる",
+            "zh": "需要",
+            "type": "Godan",
+            "example": "パスポートが要ります。",
+            "exZh": "需要护照。",
+            "phrases": "お金が要る / 時間が要る"
+      },
+      {
+            "level": "N5",
+            "kanji": "いる",
+            "kana": "いる",
+            "zh": "有；存在（人/动物）",
+            "type": "Ichidan",
+            "example": "教室に先生がいます。",
+            "exZh": "教室里有老师。",
+            "phrases": "人がいる / 家にいる"
+      },
+      {
+            "level": "N5",
+            "kanji": "入れる",
+            "kana": "いれる",
+            "zh": "放入",
+            "type": "Ichidan",
+            "example": "かばんに本を入れます。",
+            "exZh": "把书放进包里。",
+            "phrases": "水を入れる / 名前を入れる"
+      },
+      {
+            "level": "N5",
+            "kanji": "歌う",
+            "kana": "うたう",
+            "zh": "唱歌",
+            "type": "Godan",
+            "example": "日本語の歌を歌います。",
+            "exZh": "唱日语歌。",
+            "phrases": "歌を歌う / 大きい声で歌う"
+      },
+      {
+            "level": "N5",
+            "kanji": "生まれる",
+            "kana": "うまれる",
+            "zh": "出生",
+            "type": "Ichidan",
+            "example": "大阪で生まれました。",
+            "exZh": "出生在大阪。",
+            "phrases": "春に生まれる / 日本で生まれる"
+      },
+      {
+            "level": "N5",
+            "kanji": "売る",
+            "kana": "うる",
+            "zh": "卖",
+            "type": "Godan",
+            "example": "店でパンを売っています。",
+            "exZh": "店里在卖面包。",
+            "phrases": "本を売る / 安く売る"
+      },
+      {
+            "level": "N5",
+            "kanji": "起きる",
+            "kana": "おきる",
+            "zh": "起床；发生",
+            "type": "Ichidan",
+            "example": "毎朝七時に起きます。",
+            "exZh": "每天早上七点起床。",
+            "phrases": "早く起きる / 事故が起きる"
+      },
+      {
+            "level": "N5",
+            "kanji": "置く",
+            "kana": "おく",
+            "zh": "放置",
+            "type": "Godan",
+            "example": "机の上に本を置きます。",
+            "exZh": "把书放在桌上。",
+            "phrases": "ここに置く / 荷物を置く"
+      },
+      {
+            "level": "N5",
+            "kanji": "押す",
+            "kana": "おす",
+            "zh": "按；推",
+            "type": "Godan",
+            "example": "このボタンを押します。",
+            "exZh": "按这个按钮。",
+            "phrases": "ボタンを押す / ドアを押す"
+      },
+      {
+            "level": "N5",
+            "kanji": "降りる",
+            "kana": "おりる",
+            "zh": "下车；下来",
+            "type": "Ichidan",
+            "example": "次の駅で降ります。",
+            "exZh": "在下一站下车。",
+            "phrases": "電車を降りる / 階段を降りる"
+      },
+      {
+            "level": "N5",
+            "kanji": "終わる",
+            "kana": "おわる",
+            "zh": "结束",
+            "type": "Godan",
+            "example": "授業は三時に終わります。",
+            "exZh": "课三点结束。",
+            "phrases": "仕事が終わる / 試験が終わる"
+      },
+      {
+            "level": "N5",
+            "kanji": "買う",
+            "kana": "かう",
+            "zh": "买",
+            "type": "Godan",
+            "example": "コンビニで水を買います。",
+            "exZh": "在便利店买水。",
+            "phrases": "切符を買う / 新しい服を買う"
+      },
+      {
+            "level": "N5",
+            "kanji": "返す",
+            "kana": "かえす",
+            "zh": "归还",
+            "type": "Godan",
+            "example": "図書館に本を返します。",
+            "exZh": "把书还给图书馆。",
+            "phrases": "本を返す / お金を返す"
+      },
+      {
+            "level": "N5",
+            "kanji": "帰る",
+            "kana": "かえる",
+            "zh": "回去",
+            "type": "Godan",
+            "example": "六時に家へ帰ります。",
+            "exZh": "六点回家。",
+            "phrases": "国へ帰る / 早く帰る"
+      },
+      {
+            "level": "N5",
+            "kanji": "掛かる",
+            "kana": "かかる",
+            "zh": "花费；挂着",
+            "type": "Godan",
+            "example": "駅まで十分かかります。",
+            "exZh": "到车站要十分钟。",
+            "phrases": "時間がかかる / お金がかかる"
+      },
+      {
+            "level": "N5",
+            "kanji": "書く",
+            "kana": "かく",
+            "zh": "写",
+            "type": "Godan",
+            "example": "ノートに漢字を書きます。",
+            "exZh": "在笔记本上写汉字。",
+            "phrases": "手紙を書く / 名前を書く"
+      },
+      {
+            "level": "N5",
+            "kanji": "掛ける",
+            "kana": "かける",
+            "zh": "戴；打电话；挂",
+            "type": "Ichidan",
+            "example": "友だちに電話を掛けます。",
+            "exZh": "给朋友打电话。",
+            "phrases": "眼鏡を掛ける / 電話を掛ける"
+      },
+      {
+            "level": "N5",
+            "kanji": "貸す",
+            "kana": "かす",
+            "zh": "借出",
+            "type": "Godan",
+            "example": "友だちに傘を貸します。",
+            "exZh": "把伞借给朋友。",
+            "phrases": "お金を貸す / ペンを貸す"
+      },
+      {
+            "level": "N5",
+            "kanji": "借りる",
+            "kana": "かりる",
+            "zh": "借入",
+            "type": "Ichidan",
+            "example": "図書館で本を借ります。",
+            "exZh": "在图书馆借书。",
+            "phrases": "部屋を借りる / 自転車を借りる"
+      },
+      {
+            "level": "N5",
+            "kanji": "消える",
+            "kana": "きえる",
+            "zh": "熄灭；消失",
+            "type": "Ichidan",
+            "example": "電気が消えました。",
+            "exZh": "灯灭了。",
+            "phrases": "火が消える / 音が消える"
+      },
+      {
+            "level": "N5",
+            "kanji": "聞く",
+            "kana": "きく",
+            "zh": "听；问",
+            "type": "Godan",
+            "example": "音楽を聞きます。",
+            "exZh": "听音乐。",
+            "phrases": "話を聞く / 先生に聞く"
+      },
+      {
+            "level": "N5",
+            "kanji": "切る",
+            "kana": "きる",
+            "zh": "切；剪",
+            "type": "Godan",
+            "example": "紙を切ります。",
+            "exZh": "剪纸。",
+            "phrases": "髪を切る / 野菜を切る"
+      },
+      {
+            "level": "N5",
+            "kanji": "着る",
+            "kana": "きる",
+            "zh": "穿（上衣）",
+            "type": "Ichidan",
+            "example": "新しいシャツを着ます。",
+            "exZh": "穿新衬衫。",
+            "phrases": "服を着る / コートを着る"
+      },
+      {
+            "level": "N5",
+            "kanji": "来る",
+            "kana": "くる",
+            "zh": "来",
+            "type": "Irregular",
+            "example": "友だちが家に来ます。",
+            "exZh": "朋友来我家。",
+            "phrases": "ここへ来る / 明日来る"
+      },
+      {
+            "level": "N5",
+            "kanji": "曇る",
+            "kana": "くもる",
+            "zh": "变阴",
+            "type": "Godan",
+            "example": "午後から空が曇ります。",
+            "exZh": "下午开始天变阴。",
+            "phrases": "空が曇る / ガラスが曇る"
+      },
+      {
+            "level": "N5",
+            "kanji": "消す",
+            "kana": "けす",
+            "zh": "关掉；擦掉",
+            "type": "Godan",
+            "example": "電気を消してください。",
+            "exZh": "请关灯。",
+            "phrases": "テレビを消す / 字を消す"
+      },
+      {
+            "level": "N5",
+            "kanji": "答える",
+            "kana": "こたえる",
+            "zh": "回答",
+            "type": "Ichidan",
+            "example": "質問に答えます。",
+            "exZh": "回答问题。",
+            "phrases": "正しく答える / すぐ答える"
+      },
+      {
+            "level": "N5",
+            "kanji": "困る",
+            "kana": "こまる",
+            "zh": "困扰；为难",
+            "type": "Godan",
+            "example": "お金がなくて困っています。",
+            "exZh": "没钱，很为难。",
+            "phrases": "本当に困る / 道に迷って困る"
+      },
+      {
+            "level": "N5",
+            "kanji": "コピーする",
+            "kana": "コピーする",
+            "zh": "复印",
+            "type": "Suru",
+            "example": "資料をコピーします。",
+            "exZh": "复印资料。",
+            "phrases": "紙をコピーする / コピーしておく"
+      },
+      {
+            "level": "N5",
+            "kanji": "咲く",
+            "kana": "さく",
+            "zh": "开花",
+            "type": "Godan",
+            "example": "春に桜が咲きます。",
+            "exZh": "春天樱花开。",
+            "phrases": "花が咲く / きれいに咲く"
+      },
+      {
+            "level": "N5",
+            "kanji": "差す",
+            "kana": "さす",
+            "zh": "撑；照射",
+            "type": "Godan",
+            "example": "雨なので傘を差します。",
+            "exZh": "因为下雨，所以撑伞。",
+            "phrases": "傘を差す / 日が差す"
+      },
+      {
+            "level": "N5",
+            "kanji": "死ぬ",
+            "kana": "しぬ",
+            "zh": "死",
+            "type": "Godan",
+            "example": "魚が死にました。",
+            "exZh": "鱼死了。",
+            "phrases": "人が死ぬ / 病気で死ぬ"
+      },
+      {
+            "level": "N5",
+            "kanji": "閉まる",
+            "kana": "しまる",
+            "zh": "关闭；关着",
+            "type": "Godan",
+            "example": "ドアが閉まっています。",
+            "exZh": "门关着。",
+            "phrases": "店が閉まる / 窓が閉まる"
+      },
+      {
+            "level": "N5",
+            "kanji": "閉める",
+            "kana": "しめる",
+            "zh": "关闭",
+            "type": "Ichidan",
+            "example": "ドアを閉めます。",
+            "exZh": "关门。",
+            "phrases": "窓を閉める / 店を閉める"
+      },
+      {
+            "level": "N5",
+            "kanji": "知る",
+            "kana": "しる",
+            "zh": "知道",
+            "type": "Godan",
+            "example": "その人を知っています。",
+            "exZh": "我认识那个人。",
+            "phrases": "名前を知る / よく知っている"
+      },
+      {
+            "level": "N5",
+            "kanji": "吸う",
+            "kana": "すう",
+            "zh": "吸；抽烟",
+            "type": "Godan",
+            "example": "外でたばこを吸います。",
+            "exZh": "在外面抽烟。",
+            "phrases": "空気を吸う / たばこを吸う"
+      },
+      {
+            "level": "N5",
+            "kanji": "住む",
+            "kana": "すむ",
+            "zh": "居住",
+            "type": "Godan",
+            "example": "東京に住んでいます。",
+            "exZh": "住在东京。",
+            "phrases": "一人で住む / 家族と住む"
+      },
+      {
+            "level": "N5",
+            "kanji": "する",
+            "kana": "する",
+            "zh": "做",
+            "type": "Irregular",
+            "example": "毎日、勉強します。",
+            "exZh": "每天学习。",
+            "phrases": "仕事をする / 掃除する"
+      },
+      {
+            "level": "N5",
+            "kanji": "座る",
+            "kana": "すわる",
+            "zh": "坐",
+            "type": "Godan",
+            "example": "ここに座ってください。",
+            "exZh": "请坐这里。",
+            "phrases": "椅子に座る / 前に座る"
+      },
+      {
+            "level": "N5",
+            "kanji": "出す",
+            "kana": "だす",
+            "zh": "拿出；提交",
+            "type": "Godan",
+            "example": "先生に宿題を出します。",
+            "exZh": "把作业交给老师。",
+            "phrases": "手紙を出す / ごみを出す"
+      },
+      {
+            "level": "N5",
+            "kanji": "立つ",
+            "kana": "たつ",
+            "zh": "站；立",
+            "type": "Godan",
+            "example": "学生が立ちます。",
+            "exZh": "学生站起来。",
+            "phrases": "席を立つ / まっすぐ立つ"
+      },
+      {
+            "level": "N5",
+            "kanji": "頼む",
+            "kana": "たのむ",
+            "zh": "拜托；点餐",
+            "type": "Godan",
+            "example": "友だちに仕事を頼みます。",
+            "exZh": "拜托朋友做事。",
+            "phrases": "助けを頼む / コーヒーを頼む"
+      },
+      {
+            "level": "N5",
+            "kanji": "食べる",
+            "kana": "たべる",
+            "zh": "吃",
+            "type": "Ichidan",
+            "example": "朝ご飯を食べます。",
+            "exZh": "吃早饭。",
+            "phrases": "寿司を食べる / 外で食べる"
+      },
+      {
+            "level": "N5",
+            "kanji": "違う",
+            "kana": "ちがう",
+            "zh": "不同；错",
+            "type": "Godan",
+            "example": "答えが違います。",
+            "exZh": "答案不对。",
+            "phrases": "色が違う / いつもと違う"
+      },
+      {
+            "level": "N5",
+            "kanji": "使う",
+            "kana": "つかう",
+            "zh": "使用",
+            "type": "Godan",
+            "example": "辞書を使います。",
+            "exZh": "使用字典。",
+            "phrases": "スマホを使う / 日本語を使う"
+      },
+      {
+            "level": "N5",
+            "kanji": "疲れる",
+            "kana": "つかれる",
+            "zh": "疲累",
+            "type": "Ichidan",
+            "example": "今日はとても疲れました。",
+            "exZh": "今天很累。",
+            "phrases": "仕事で疲れる / 少し疲れる"
+      },
+      {
+            "level": "N5",
+            "kanji": "着く",
+            "kana": "つく",
+            "zh": "到达",
+            "type": "Godan",
+            "example": "駅に着きました。",
+            "exZh": "到车站了。",
+            "phrases": "家に着く / 早く着く"
+      },
+      {
+            "level": "N5",
+            "kanji": "作る",
+            "kana": "つくる",
+            "zh": "制作；做饭",
+            "type": "Godan",
+            "example": "母はカレーを作ります。",
+            "exZh": "妈妈做咖喱。",
+            "phrases": "料理を作る / 会社を作る"
+      },
+      {
+            "level": "N5",
+            "kanji": "勤める",
+            "kana": "つとめる",
+            "zh": "工作；任职",
+            "type": "Ichidan",
+            "example": "銀行に勤めています。",
+            "exZh": "在银行工作。",
+            "phrases": "会社に勤める / 長く勤める"
+      },
+      {
+            "level": "N5",
+            "kanji": "出かける",
+            "kana": "でかける",
+            "zh": "出门",
+            "type": "Ichidan",
+            "example": "午後、買い物に出かけます。",
+            "exZh": "下午出门购物。",
+            "phrases": "町へ出かける / 早く出かける"
+      },
+      {
+            "level": "N5",
+            "kanji": "出る",
+            "kana": "でる",
+            "zh": "出去；出现",
+            "type": "Ichidan",
+            "example": "七時に家を出ます。",
+            "exZh": "七点出门。",
+            "phrases": "部屋を出る / 試験に出る"
+      },
+      {
+            "level": "N5",
+            "kanji": "飛ぶ",
+            "kana": "とぶ",
+            "zh": "飞",
+            "type": "Godan",
+            "example": "鳥が空を飛びます。",
+            "exZh": "鸟在天空飞。",
+            "phrases": "空を飛ぶ / 飛行機が飛ぶ"
+      },
+      {
+            "level": "N5",
+            "kanji": "止まる",
+            "kana": "とまる",
+            "zh": "停止",
+            "type": "Godan",
+            "example": "バスが止まりました。",
+            "exZh": "公交车停了。",
+            "phrases": "車が止まる / 時計が止まる"
+      },
+      {
+            "level": "N5",
+            "kanji": "取る",
+            "kana": "とる",
+            "zh": "拿；取得",
+            "type": "Godan",
+            "example": "棚から本を取ります。",
+            "exZh": "从架子上拿书。",
+            "phrases": "写真を取る / メモを取る"
+      },
+      {
+            "level": "N5",
+            "kanji": "撮る",
+            "kana": "とる",
+            "zh": "拍摄",
+            "type": "Godan",
+            "example": "公園で写真を撮ります。",
+            "exZh": "在公园拍照。",
+            "phrases": "写真を撮る / ビデオを撮る"
+      },
+      {
+            "level": "N5",
+            "kanji": "習う",
+            "kana": "ならう",
+            "zh": "学习",
+            "type": "Godan",
+            "example": "先生に日本語を習います。",
+            "exZh": "跟老师学日语。",
+            "phrases": "ピアノを習う / 学校で習う"
+      },
+      {
+            "level": "N5",
+            "kanji": "並ぶ",
+            "kana": "ならぶ",
+            "zh": "排队；排列",
+            "type": "Godan",
+            "example": "店の前に並びます。",
+            "exZh": "在店前排队。",
+            "phrases": "列に並ぶ / 机が並ぶ"
+      },
+      {
+            "level": "N5",
+            "kanji": "脱ぐ",
+            "kana": "ぬぐ",
+            "zh": "脱",
+            "type": "Godan",
+            "example": "部屋で靴を脱ぎます。",
+            "exZh": "在房间里脱鞋。",
+            "phrases": "靴を脱ぐ / コートを脱ぐ"
+      },
+      {
+            "level": "N5",
+            "kanji": "寝る",
+            "kana": "ねる",
+            "zh": "睡觉",
+            "type": "Ichidan",
+            "example": "十一時に寝ます。",
+            "exZh": "十一点睡觉。",
+            "phrases": "早く寝る / ベッドで寝る"
+      },
+      {
+            "level": "N5",
+            "kanji": "登る",
+            "kana": "のぼる",
+            "zh": "登；爬",
+            "type": "Godan",
+            "example": "山に登ります。",
+            "exZh": "爬山。",
+            "phrases": "階段を登る / 山を登る"
+      },
+      {
+            "level": "N5",
+            "kanji": "飲む",
+            "kana": "のむ",
+            "zh": "喝",
+            "type": "Godan",
+            "example": "水を飲みます。",
+            "exZh": "喝水。",
+            "phrases": "お茶を飲む / 薬を飲む"
+      },
+      {
+            "level": "N5",
+            "kanji": "乗る",
+            "kana": "のる",
+            "zh": "乘坐",
+            "type": "Godan",
+            "example": "電車に乗ります。",
+            "exZh": "坐电车。",
+            "phrases": "バスに乗る / 自転車に乗る"
+      },
+      {
+            "level": "N5",
+            "kanji": "入る",
+            "kana": "はいる",
+            "zh": "进入",
+            "type": "Godan",
+            "example": "部屋に入ります。",
+            "exZh": "进入房间。",
+            "phrases": "店に入る / お風呂に入る"
+      },
+      {
+            "level": "N5",
+            "kanji": "働く",
+            "kana": "はたらく",
+            "zh": "工作",
+            "type": "Godan",
+            "example": "父は会社で働いています。",
+            "exZh": "爸爸在公司工作。",
+            "phrases": "工場で働く / よく働く"
+      },
+      {
+            "level": "N5",
+            "kanji": "話す",
+            "kana": "はなす",
+            "zh": "说话",
+            "type": "Godan",
+            "example": "友だちと日本語で話します。",
+            "exZh": "和朋友用日语说话。",
+            "phrases": "英語を話す / 電話で話す"
+      },
+      {
+            "level": "N5",
+            "kanji": "引く",
+            "kana": "ひく",
+            "zh": "拉；查",
+            "type": "Godan",
+            "example": "辞書を引きます。",
+            "exZh": "查字典。",
+            "phrases": "ドアを引く / 辞書を引く"
+      },
+      {
+            "level": "N5",
+            "kanji": "弾く",
+            "kana": "ひく",
+            "zh": "弹奏",
+            "type": "Godan",
+            "example": "妹はピアノを弾きます。",
+            "exZh": "妹妹弹钢琴。",
+            "phrases": "ギターを弾く / 上手に弾く"
+      },
+      {
+            "level": "N5",
+            "kanji": "降る",
+            "kana": "ふる",
+            "zh": "下（雨雪）",
+            "type": "Godan",
+            "example": "雨が降っています。",
+            "exZh": "正在下雨。",
+            "phrases": "雨が降る / 雪が降る"
+      },
+      {
+            "level": "N5",
+            "kanji": "曲がる",
+            "kana": "まがる",
+            "zh": "转弯",
+            "type": "Godan",
+            "example": "次の角を右に曲がります。",
+            "exZh": "在下个拐角右转。",
+            "phrases": "右へ曲がる / 道が曲がる"
+      },
+      {
+            "level": "N5",
+            "kanji": "待つ",
+            "kana": "まつ",
+            "zh": "等待",
+            "type": "Godan",
+            "example": "バスを待ちます。",
+            "exZh": "等公交车。",
+            "phrases": "少し待つ / 友だちを待つ"
+      },
+      {
+            "level": "N5",
+            "kanji": "磨く",
+            "kana": "みがく",
+            "zh": "刷；磨",
+            "type": "Godan",
+            "example": "朝、歯を磨きます。",
+            "exZh": "早上刷牙。",
+            "phrases": "歯を磨く / 靴を磨く"
+      },
+      {
+            "level": "N5",
+            "kanji": "見せる",
+            "kana": "みせる",
+            "zh": "给看",
+            "type": "Ichidan",
+            "example": "写真を見せてください。",
+            "exZh": "请给我看照片。",
+            "phrases": "カードを見せる / 友だちに見せる"
+      },
+      {
+            "level": "N5",
+            "kanji": "見る",
+            "kana": "みる",
+            "zh": "看",
+            "type": "Ichidan",
+            "example": "映画を見ます。",
+            "exZh": "看电影。",
+            "phrases": "テレビを見る / 写真を見る"
+      },
+      {
+            "level": "N5",
+            "kanji": "持つ",
+            "kana": "もつ",
+            "zh": "拿；拥有",
+            "type": "Godan",
+            "example": "かばんを持っています。",
+            "exZh": "拿着包。",
+            "phrases": "傘を持つ / お金を持つ"
+      },
+      {
+            "level": "N5",
+            "kanji": "休む",
+            "kana": "やすむ",
+            "zh": "休息；请假",
+            "type": "Godan",
+            "example": "日曜日は家で休みます。",
+            "exZh": "星期天在家休息。",
+            "phrases": "学校を休む / 少し休む"
+      },
+      {
+            "level": "N5",
+            "kanji": "呼ぶ",
+            "kana": "よぶ",
+            "zh": "叫；呼唤",
+            "type": "Godan",
+            "example": "友だちの名前を呼びます。",
+            "exZh": "叫朋友的名字。",
+            "phrases": "タクシーを呼ぶ / 名前を呼ぶ"
+      },
+      {
+            "level": "N5",
+            "kanji": "読む",
+            "kana": "よむ",
+            "zh": "读",
+            "type": "Godan",
+            "example": "新聞を読みます。",
+            "exZh": "读报纸。",
+            "phrases": "本を読む / 声に出して読む"
+      },
+      {
+            "level": "N5",
+            "kanji": "分かる",
+            "kana": "わかる",
+            "zh": "明白；懂",
+            "type": "Godan",
+            "example": "日本語が少し分かります。",
+            "exZh": "懂一点日语。",
+            "phrases": "意味が分かる / よく分かる"
+      },
+      {
+            "level": "N5",
+            "kanji": "忘れる",
+            "kana": "わすれる",
+            "zh": "忘记",
+            "type": "Ichidan",
+            "example": "宿題を忘れました。",
+            "exZh": "忘了作业。",
+            "phrases": "名前を忘れる / すぐ忘れる"
+      },
+      {
+            "level": "N5",
+            "kanji": "渡る",
+            "kana": "わたる",
+            "zh": "渡过；过马路",
+            "type": "Godan",
+            "example": "橋を渡ります。",
+            "exZh": "过桥。",
+            "phrases": "道を渡る / 橋を渡る"
+      },
+      {
+            "level": "N5",
+            "kanji": "渡す",
+            "kana": "わたす",
+            "zh": "交给",
+            "type": "Godan",
+            "example": "友だちに本を渡します。",
+            "exZh": "把书交给朋友。",
+            "phrases": "書類を渡す / 手で渡す"
+      },
+      {
+            "level": "N4",
+            "kanji": "合う",
+            "kana": "あう",
+            "zh": "合适；一致",
+            "type": "Godan",
+            "example": "この靴は足に合います。",
+            "exZh": "这双鞋合脚。",
+            "phrases": "サイズが合う / 意見が合う"
+      },
+      {
+            "level": "N4",
+            "kanji": "上がる",
+            "kana": "あがる",
+            "zh": "上升；进屋",
+            "type": "Godan",
+            "example": "値段が上がりました。",
+            "exZh": "价格上涨了。",
+            "phrases": "熱が上がる / 家に上がる"
+      },
+      {
+            "level": "N4",
+            "kanji": "空く",
+            "kana": "あく",
+            "zh": "空；空出来",
+            "type": "Godan",
+            "example": "席が空きました。",
+            "exZh": "座位空出来了。",
+            "phrases": "部屋が空く / お腹が空く"
+      },
+      {
+            "level": "N4",
+            "kanji": "開く",
+            "kana": "ひらく",
+            "zh": "打开；举办",
+            "type": "Godan",
+            "example": "会議を開きます。",
+            "exZh": "召开会议。",
+            "phrases": "店を開く / 本を開く"
+      },
+      {
+            "level": "N4",
+            "kanji": "上げる",
+            "kana": "あげる",
+            "zh": "提高；举起",
+            "type": "Ichidan",
+            "example": "音を少し上げます。",
+            "exZh": "把声音调高一点。",
+            "phrases": "値段を上げる / 手を上げる"
+      },
+      {
+            "level": "N4",
+            "kanji": "集まる",
+            "kana": "あつまる",
+            "zh": "集合；聚集",
+            "type": "Godan",
+            "example": "駅の前に集まります。",
+            "exZh": "在车站前集合。",
+            "phrases": "人が集まる / みんなで集まる"
+      },
+      {
+            "level": "N4",
+            "kanji": "集める",
+            "kana": "あつめる",
+            "zh": "收集",
+            "type": "Ichidan",
+            "example": "古い切手を集めています。",
+            "exZh": "正在收集旧邮票。",
+            "phrases": "資料を集める / お金を集める"
+      },
+      {
+            "level": "N4",
+            "kanji": "謝る",
+            "kana": "あやまる",
+            "zh": "道歉",
+            "type": "Godan",
+            "example": "友だちに謝りました。",
+            "exZh": "向朋友道歉了。",
+            "phrases": "すぐ謝る / 心から謝る"
+      },
+      {
+            "level": "N4",
+            "kanji": "安心する",
+            "kana": "あんしんする",
+            "zh": "放心",
+            "type": "Suru",
+            "example": "家族の声を聞いて安心しました。",
+            "exZh": "听到家人的声音后放心了。",
+            "phrases": "安心して待つ / 少し安心する"
+      },
+      {
+            "level": "N4",
+            "kanji": "案内する",
+            "kana": "あんないする",
+            "zh": "带路；介绍",
+            "type": "Suru",
+            "example": "町を案内します。",
+            "exZh": "带你参观城市。",
+            "phrases": "駅まで案内する / 友だちを案内する"
+      },
+      {
+            "level": "N4",
+            "kanji": "生きる",
+            "kana": "いきる",
+            "zh": "活；生存",
+            "type": "Ichidan",
+            "example": "健康に生きたいです。",
+            "exZh": "想健康地生活。",
+            "phrases": "長く生きる / 一人で生きる"
+      },
+      {
+            "level": "N4",
+            "kanji": "祈る",
+            "kana": "いのる",
+            "zh": "祈祷；祝愿",
+            "type": "Godan",
+            "example": "試験の成功を祈ります。",
+            "exZh": "祝考试成功。",
+            "phrases": "幸せを祈る / 心から祈る"
+      },
+      {
+            "level": "N4",
+            "kanji": "植える",
+            "kana": "うえる",
+            "zh": "种植",
+            "type": "Ichidan",
+            "example": "庭に花を植えます。",
+            "exZh": "在院子里种花。",
+            "phrases": "木を植える / 野菜を植える"
+      },
+      {
+            "level": "N4",
+            "kanji": "受ける",
+            "kana": "うける",
+            "zh": "参加；接受",
+            "type": "Ichidan",
+            "example": "来月、試験を受けます。",
+            "exZh": "下个月参加考试。",
+            "phrases": "授業を受ける / 相談を受ける"
+      },
+      {
+            "level": "N4",
+            "kanji": "動く",
+            "kana": "うごく",
+            "zh": "移动；运转",
+            "type": "Godan",
+            "example": "この機械はよく動きます。",
+            "exZh": "这台机器运转良好。",
+            "phrases": "車が動く / 心が動く"
+      },
+      {
+            "level": "N4",
+            "kanji": "打つ",
+            "kana": "うつ",
+            "zh": "打；敲",
+            "type": "Godan",
+            "example": "パソコンで字を打ちます。",
+            "exZh": "用电脑打字。",
+            "phrases": "メールを打つ / ボールを打つ"
+      },
+      {
+            "level": "N4",
+            "kanji": "写す",
+            "kana": "うつす",
+            "zh": "抄写；拍下",
+            "type": "Godan",
+            "example": "黒板の字をノートに写します。",
+            "exZh": "把黑板上的字抄到笔记本。",
+            "phrases": "ノートに写す / 写真に写す"
+      },
+      {
+            "level": "N4",
+            "kanji": "移る",
+            "kana": "うつる",
+            "zh": "搬迁；转移",
+            "type": "Godan",
+            "example": "来月、新しい部屋に移ります。",
+            "exZh": "下个月搬到新房间。",
+            "phrases": "席を移る / 会社に移る"
+      },
+      {
+            "level": "N4",
+            "kanji": "選ぶ",
+            "kana": "えらぶ",
+            "zh": "选择",
+            "type": "Godan",
+            "example": "好きな色を選んでください。",
+            "exZh": "请选择喜欢的颜色。",
+            "phrases": "服を選ぶ / 一つ選ぶ"
+      },
+      {
+            "level": "N4",
+            "kanji": "落ちる",
+            "kana": "おちる",
+            "zh": "落下；落选",
+            "type": "Ichidan",
+            "example": "葉が木から落ちます。",
+            "exZh": "叶子从树上落下。",
+            "phrases": "財布が落ちる / 試験に落ちる"
+      },
+      {
+            "level": "N4",
+            "kanji": "落とす",
+            "kana": "おとす",
+            "zh": "使落下；丢失",
+            "type": "Godan",
+            "example": "駅で財布を落としました。",
+            "exZh": "在车站丢了钱包。",
+            "phrases": "スマホを落とす / 汚れを落とす"
+      },
+      {
+            "level": "N4",
+            "kanji": "踊る",
+            "kana": "おどる",
+            "zh": "跳舞",
+            "type": "Godan",
+            "example": "祭りでみんなが踊ります。",
+            "exZh": "大家在祭典上跳舞。",
+            "phrases": "楽しく踊る / 歌って踊る"
+      },
+      {
+            "level": "N4",
+            "kanji": "驚く",
+            "kana": "おどろく",
+            "zh": "惊讶",
+            "type": "Godan",
+            "example": "大きい音に驚きました。",
+            "exZh": "被很大的声音吓了一跳。",
+            "phrases": "ニュースに驚く / とても驚く"
+      },
+      {
+            "level": "N4",
+            "kanji": "思い出す",
+            "kana": "おもいだす",
+            "zh": "想起",
+            "type": "Godan",
+            "example": "昔の友だちを思い出しました。",
+            "exZh": "想起了以前的朋友。",
+            "phrases": "名前を思い出す / 急に思い出す"
+      },
+      {
+            "level": "N4",
+            "kanji": "折る",
+            "kana": "おる",
+            "zh": "折断；折叠",
+            "type": "Godan",
+            "example": "紙を半分に折ります。",
+            "exZh": "把纸对折。",
+            "phrases": "枝を折る / 紙を折る"
+      },
+      {
+            "level": "N4",
+            "kanji": "折れる",
+            "kana": "おれる",
+            "zh": "折断",
+            "type": "Ichidan",
+            "example": "強い風で枝が折れました。",
+            "exZh": "树枝被强风吹断了。",
+            "phrases": "骨が折れる / 心が折れる"
+      },
+      {
+            "level": "N4",
+            "kanji": "片付ける",
+            "kana": "かたづける",
+            "zh": "收拾",
+            "type": "Ichidan",
+            "example": "部屋を片付けます。",
+            "exZh": "收拾房间。",
+            "phrases": "机を片付ける / 荷物を片付ける"
+      },
+      {
+            "level": "N4",
+            "kanji": "勝つ",
+            "kana": "かつ",
+            "zh": "赢",
+            "type": "Godan",
+            "example": "試合に勝ちました。",
+            "exZh": "比赛赢了。",
+            "phrases": "ゲームに勝つ / 絶対勝つ"
+      },
+      {
+            "level": "N4",
+            "kanji": "変える",
+            "kana": "かえる",
+            "zh": "改变；更换",
+            "type": "Ichidan",
+            "example": "予定を変えました。",
+            "exZh": "改了计划。",
+            "phrases": "時間を変える / 色を変える"
+      },
+      {
+            "level": "N4",
+            "kanji": "乾く",
+            "kana": "かわく",
+            "zh": "干",
+            "type": "Godan",
+            "example": "洗濯物が乾きました。",
+            "exZh": "洗的衣服干了。",
+            "phrases": "服が乾く / のどが渇く"
+      },
+      {
+            "level": "N4",
+            "kanji": "考える",
+            "kana": "かんがえる",
+            "zh": "思考；考虑",
+            "type": "Ichidan",
+            "example": "将来について考えます。",
+            "exZh": "思考将来的事。",
+            "phrases": "よく考える / 方法を考える"
+      },
+      {
+            "level": "N4",
+            "kanji": "頑張る",
+            "kana": "がんばる",
+            "zh": "努力；加油",
+            "type": "Godan",
+            "example": "試験まで頑張ります。",
+            "exZh": "到考试前努力。",
+            "phrases": "仕事を頑張る / 最後まで頑張る"
+      },
+      {
+            "level": "N4",
+            "kanji": "聞こえる",
+            "kana": "きこえる",
+            "zh": "听得见",
+            "type": "Ichidan",
+            "example": "外の音が聞こえます。",
+            "exZh": "听得见外面的声音。",
+            "phrases": "声が聞こえる / よく聞こえる"
+      },
+      {
+            "level": "N4",
+            "kanji": "決まる",
+            "kana": "きまる",
+            "zh": "决定下来",
+            "type": "Godan",
+            "example": "旅行の日が決まりました。",
+            "exZh": "旅行日期定下来了。",
+            "phrases": "予定が決まる / ルールが決まる"
+      },
+      {
+            "level": "N4",
+            "kanji": "決める",
+            "kana": "きめる",
+            "zh": "决定",
+            "type": "Ichidan",
+            "example": "今日の予定を決めます。",
+            "exZh": "决定今天的计划。",
+            "phrases": "時間を決める / 自分で決める"
+      },
+      {
+            "level": "N4",
+            "kanji": "比べる",
+            "kana": "くらべる",
+            "zh": "比较",
+            "type": "Ichidan",
+            "example": "二つの答えを比べます。",
+            "exZh": "比较两个答案。",
+            "phrases": "値段を比べる / 前と比べる"
+      },
+      {
+            "level": "N4",
+            "kanji": "くれる",
+            "kana": "くれる",
+            "zh": "给我；给我们",
+            "type": "Ichidan",
+            "example": "友だちが本をくれました。",
+            "exZh": "朋友给了我一本书。",
+            "phrases": "プレゼントをくれる / 教えてくれる"
+      },
+      {
+            "level": "N4",
+            "kanji": "暮れる",
+            "kana": "くれる",
+            "zh": "天黑；岁末",
+            "type": "Ichidan",
+            "example": "日が暮れました。",
+            "exZh": "天黑了。",
+            "phrases": "日が暮れる / 年が暮れる"
+      },
+      {
+            "level": "N4",
+            "kanji": "壊れる",
+            "kana": "こわれる",
+            "zh": "坏掉",
+            "type": "Ichidan",
+            "example": "古い時計が壊れました。",
+            "exZh": "旧钟坏了。",
+            "phrases": "機械が壊れる / 急に壊れる"
+      },
+      {
+            "level": "N4",
+            "kanji": "壊す",
+            "kana": "こわす",
+            "zh": "弄坏",
+            "type": "Godan",
+            "example": "弟が皿を壊しました。",
+            "exZh": "弟弟把盘子弄坏了。",
+            "phrases": "窓を壊す / 体を壊す"
+      },
+      {
+            "level": "N4",
+            "kanji": "下がる",
+            "kana": "さがる",
+            "zh": "下降；后退",
+            "type": "Godan",
+            "example": "気温が下がりました。",
+            "exZh": "气温下降了。",
+            "phrases": "値段が下がる / 後ろへ下がる"
+      },
+      {
+            "level": "N4",
+            "kanji": "下げる",
+            "kana": "さげる",
+            "zh": "降低；提着",
+            "type": "Ichidan",
+            "example": "音を少し下げます。",
+            "exZh": "把声音调低一点。",
+            "phrases": "値段を下げる / 頭を下げる"
+      },
+      {
+            "level": "N4",
+            "kanji": "探す",
+            "kana": "さがす",
+            "zh": "寻找",
+            "type": "Godan",
+            "example": "新しい部屋を探しています。",
+            "exZh": "正在找新房间。",
+            "phrases": "仕事を探す / 財布を探す"
+      },
+      {
+            "level": "N4",
+            "kanji": "誘う",
+            "kana": "さそう",
+            "zh": "邀请",
+            "type": "Godan",
+            "example": "友だちを映画に誘います。",
+            "exZh": "邀请朋友去看电影。",
+            "phrases": "食事に誘う / デートに誘う"
+      },
+      {
+            "level": "N4",
+            "kanji": "騒ぐ",
+            "kana": "さわぐ",
+            "zh": "吵闹",
+            "type": "Godan",
+            "example": "電車の中で騒がないでください。",
+            "exZh": "请不要在电车里吵闹。",
+            "phrases": "子どもが騒ぐ / 夜に騒ぐ"
+      },
+      {
+            "level": "N4",
+            "kanji": "叱る",
+            "kana": "しかる",
+            "zh": "责备",
+            "type": "Godan",
+            "example": "先生が学生を叱りました。",
+            "exZh": "老师责备了学生。",
+            "phrases": "子どもを叱る / 強く叱る"
+      },
+      {
+            "level": "N4",
+            "kanji": "仕舞う",
+            "kana": "しまう",
+            "zh": "收起来；结束",
+            "type": "Godan",
+            "example": "本を棚に仕舞います。",
+            "exZh": "把书收进书架。",
+            "phrases": "服を仕舞う / 仕事を仕舞う"
+      },
+      {
+            "level": "N4",
+            "kanji": "失敗する",
+            "kana": "しっぱいする",
+            "zh": "失败",
+            "type": "Suru",
+            "example": "料理に失敗しました。",
+            "exZh": "做菜失败了。",
+            "phrases": "試験に失敗する / 失敗して学ぶ"
+      },
+      {
+            "level": "N4",
+            "kanji": "知らせる",
+            "kana": "しらせる",
+            "zh": "通知；告知",
+            "type": "Ichidan",
+            "example": "着いたら知らせてください。",
+            "exZh": "到了以后请通知我。",
+            "phrases": "家族に知らせる / メールで知らせる"
+      },
+      {
+            "level": "N4",
+            "kanji": "調べる",
+            "kana": "しらべる",
+            "zh": "调查；查询",
+            "type": "Ichidan",
+            "example": "辞書で意味を調べます。",
+            "exZh": "用字典查意思。",
+            "phrases": "ネットで調べる / 原因を調べる"
+      },
+      {
+            "level": "N4",
+            "kanji": "準備する",
+            "kana": "じゅんびする",
+            "zh": "准备",
+            "type": "Suru",
+            "example": "旅行の準備をします。",
+            "exZh": "准备旅行。",
+            "phrases": "朝食を準備する / 早く準備する"
+      },
+      {
+            "level": "N4",
+            "kanji": "紹介する",
+            "kana": "しょうかいする",
+            "zh": "介绍",
+            "type": "Suru",
+            "example": "友だちを先生に紹介します。",
+            "exZh": "把朋友介绍给老师。",
+            "phrases": "自己紹介する / 会社を紹介する"
+      },
+      {
+            "level": "N4",
+            "kanji": "招待する",
+            "kana": "しょうたいする",
+            "zh": "邀请",
+            "type": "Suru",
+            "example": "友だちをパーティーに招待します。",
+            "exZh": "邀请朋友参加派对。",
+            "phrases": "客を招待する / 家に招待する"
+      },
+      {
+            "level": "N4",
+            "kanji": "進む",
+            "kana": "すすむ",
+            "zh": "前进；进展",
+            "type": "Godan",
+            "example": "計画が進みました。",
+            "exZh": "计划进展了。",
+            "phrases": "前へ進む / 仕事が進む"
+      },
+      {
+            "level": "N4",
+            "kanji": "進める",
+            "kana": "すすめる",
+            "zh": "推进；前进",
+            "type": "Ichidan",
+            "example": "会議を進めます。",
+            "exZh": "推进会议。",
+            "phrases": "計画を進める / 話を進める"
+      },
+      {
+            "level": "N4",
+            "kanji": "滑る",
+            "kana": "すべる",
+            "zh": "滑；滑倒",
+            "type": "Godan",
+            "example": "雪の日は道で滑ります。",
+            "exZh": "下雪天路上会滑。",
+            "phrases": "氷で滑る / 試験に滑る"
+      },
+      {
+            "level": "N4",
+            "kanji": "生活する",
+            "kana": "せいかつする",
+            "zh": "生活",
+            "type": "Suru",
+            "example": "東京で生活しています。",
+            "exZh": "在东京生活。",
+            "phrases": "一人で生活する / 静かに生活する"
+      },
+      {
+            "level": "N4",
+            "kanji": "説明する",
+            "kana": "せつめいする",
+            "zh": "说明",
+            "type": "Suru",
+            "example": "先生が文法を説明します。",
+            "exZh": "老师说明语法。",
+            "phrases": "理由を説明する / 簡単に説明する"
+      },
+      {
+            "level": "N4",
+            "kanji": "相談する",
+            "kana": "そうだんする",
+            "zh": "商量；咨询",
+            "type": "Suru",
+            "example": "先生に相談します。",
+            "exZh": "和老师商量。",
+            "phrases": "家族に相談する / 進路を相談する"
+      },
+      {
+            "level": "N4",
+            "kanji": "卒業する",
+            "kana": "そつぎょうする",
+            "zh": "毕业",
+            "type": "Suru",
+            "example": "三月に大学を卒業します。",
+            "exZh": "三月大学毕业。",
+            "phrases": "学校を卒業する / 去年卒業する"
+      },
+      {
+            "level": "N4",
+            "kanji": "育てる",
+            "kana": "そだてる",
+            "zh": "养育；培养",
+            "type": "Ichidan",
+            "example": "母は花を育てています。",
+            "exZh": "妈妈在养花。",
+            "phrases": "子どもを育てる / 野菜を育てる"
+      },
+      {
+            "level": "N4",
+            "kanji": "倒れる",
+            "kana": "たおれる",
+            "zh": "倒下",
+            "type": "Ichidan",
+            "example": "強い風で木が倒れました。",
+            "exZh": "树被强风吹倒了。",
+            "phrases": "人が倒れる / 急に倒れる"
+      },
+      {
+            "level": "N4",
+            "kanji": "足す",
+            "kana": "たす",
+            "zh": "加上；补足",
+            "type": "Godan",
+            "example": "水を少し足します。",
+            "exZh": "加一点水。",
+            "phrases": "数を足す / 塩を足す"
+      },
+      {
+            "level": "N4",
+            "kanji": "助ける",
+            "kana": "たすける",
+            "zh": "帮助；救助",
+            "type": "Ichidan",
+            "example": "困っている人を助けます。",
+            "exZh": "帮助有困难的人。",
+            "phrases": "友だちを助ける / 命を助ける"
+      },
+      {
+            "level": "N4",
+            "kanji": "訪ねる",
+            "kana": "たずねる",
+            "zh": "拜访",
+            "type": "Ichidan",
+            "example": "先生の家を訪ねました。",
+            "exZh": "拜访了老师家。",
+            "phrases": "友人を訪ねる / 会社を訪ねる"
+      },
+      {
+            "level": "N4",
+            "kanji": "尋ねる",
+            "kana": "たずねる",
+            "zh": "询问",
+            "type": "Ichidan",
+            "example": "駅員に道を尋ねます。",
+            "exZh": "向站务员问路。",
+            "phrases": "名前を尋ねる / 理由を尋ねる"
+      },
+      {
+            "level": "N4",
+            "kanji": "建てる",
+            "kana": "たてる",
+            "zh": "建造",
+            "type": "Ichidan",
+            "example": "新しい家を建てます。",
+            "exZh": "建新房子。",
+            "phrases": "ビルを建てる / 学校を建てる"
+      },
+      {
+            "level": "N4",
+            "kanji": "立てる",
+            "kana": "たてる",
+            "zh": "竖立；制定",
+            "type": "Ichidan",
+            "example": "旅行の計画を立てます。",
+            "exZh": "制定旅行计划。",
+            "phrases": "予定を立てる / 旗を立てる"
+      },
+      {
+            "level": "N4",
+            "kanji": "足りる",
+            "kana": "たりる",
+            "zh": "足够",
+            "type": "Ichidan",
+            "example": "お金は足りますか。",
+            "exZh": "钱够吗？",
+            "phrases": "時間が足りる / 十分足りる"
+      },
+      {
+            "level": "N4",
+            "kanji": "楽しむ",
+            "kana": "たのしむ",
+            "zh": "享受；期待",
+            "type": "Godan",
+            "example": "週末を楽しみます。",
+            "exZh": "享受周末。",
+            "phrases": "旅行を楽しむ / 音楽を楽しむ"
+      },
+      {
+            "level": "N4",
+            "kanji": "チェックする",
+            "kana": "チェックする",
+            "zh": "检查",
+            "type": "Suru",
+            "example": "答えをチェックします。",
+            "exZh": "检查答案。",
+            "phrases": "メールをチェックする / 予定をチェックする"
+      },
+      {
+            "level": "N4",
+            "kanji": "注意する",
+            "kana": "ちゅういする",
+            "zh": "注意；提醒",
+            "type": "Suru",
+            "example": "車に注意してください。",
+            "exZh": "请注意车辆。",
+            "phrases": "安全に注意する / 子どもに注意する"
+      },
+      {
+            "level": "N4",
+            "kanji": "注文する",
+            "kana": "ちゅうもんする",
+            "zh": "点餐；订购",
+            "type": "Suru",
+            "example": "レストランでカレーを注文します。",
+            "exZh": "在餐厅点咖喱。",
+            "phrases": "料理を注文する / ネットで注文する"
+      },
+      {
+            "level": "N4",
+            "kanji": "捕まえる",
+            "kana": "つかまえる",
+            "zh": "抓住；逮住",
+            "type": "Ichidan",
+            "example": "タクシーを捕まえました。",
+            "exZh": "拦到了出租车。",
+            "phrases": "タクシーを捕まえる / 犯人を捕まえる"
+      },
+      {
+            "level": "N4",
+            "kanji": "捕まる",
+            "kana": "つかまる",
+            "zh": "被抓；抓住扶手",
+            "type": "Godan",
+            "example": "泥棒が捕まりました。",
+            "exZh": "小偷被抓住了。",
+            "phrases": "警察に捕まる / 手すりにつかまる"
+      },
+      {
+            "level": "N4",
+            "kanji": "伝える",
+            "kana": "つたえる",
+            "zh": "传达",
+            "type": "Ichidan",
+            "example": "母にメッセージを伝えます。",
+            "exZh": "把信息传达给妈妈。",
+            "phrases": "気持ちを伝える / 予定を伝える"
+      },
+      {
+            "level": "N4",
+            "kanji": "続く",
+            "kana": "つづく",
+            "zh": "持续",
+            "type": "Godan",
+            "example": "雨が三日続きました。",
+            "exZh": "雨持续下了三天。",
+            "phrases": "会議が続く / 長く続く"
+      },
+      {
+            "level": "N4",
+            "kanji": "続ける",
+            "kana": "つづける",
+            "zh": "继续",
+            "type": "Ichidan",
+            "example": "日本語の勉強を続けます。",
+            "exZh": "继续学习日语。",
+            "phrases": "仕事を続ける / 毎日続ける"
+      },
+      {
+            "level": "N4",
+            "kanji": "包む",
+            "kana": "つつむ",
+            "zh": "包裹",
+            "type": "Godan",
+            "example": "プレゼントを紙で包みます。",
+            "exZh": "用纸包装礼物。",
+            "phrases": "箱を包む / きれいに包む"
+      },
+      {
+            "level": "N4",
+            "kanji": "連れる",
+            "kana": "つれる",
+            "zh": "带着；领着",
+            "type": "Ichidan",
+            "example": "弟を公園へ連れて行きます。",
+            "exZh": "带弟弟去公园。",
+            "phrases": "子どもを連れる / 犬を連れる"
+      },
+      {
+            "level": "N4",
+            "kanji": "釣る",
+            "kana": "つる",
+            "zh": "钓鱼",
+            "type": "Godan",
+            "example": "週末に魚を釣ります。",
+            "exZh": "周末钓鱼。",
+            "phrases": "川で釣る / 魚を釣る"
+      },
+      {
+            "level": "N4",
+            "kanji": "手伝う",
+            "kana": "てつだう",
+            "zh": "帮忙",
+            "type": "Godan",
+            "example": "料理を手伝います。",
+            "exZh": "帮忙做饭。",
+            "phrases": "母を手伝う / 引っ越しを手伝う"
+      },
+      {
+            "level": "N4",
+            "kanji": "届ける",
+            "kana": "とどける",
+            "zh": "送达",
+            "type": "Ichidan",
+            "example": "荷物を会社に届けます。",
+            "exZh": "把包裹送到公司。",
+            "phrases": "手紙を届ける / 家まで届ける"
+      },
+      {
+            "level": "N4",
+            "kanji": "泊まる",
+            "kana": "とまる",
+            "zh": "住宿",
+            "type": "Godan",
+            "example": "ホテルに泊まります。",
+            "exZh": "住酒店。",
+            "phrases": "友だちの家に泊まる / 一泊泊まる"
+      },
+      {
+            "level": "N4",
+            "kanji": "止める",
+            "kana": "とめる",
+            "zh": "停止；停放",
+            "type": "Ichidan",
+            "example": "ここに車を止めます。",
+            "exZh": "把车停在这里。",
+            "phrases": "車を止める / 音楽を止める"
+      },
+      {
+            "level": "N4",
+            "kanji": "取り替える",
+            "kana": "とりかえる",
+            "zh": "更换",
+            "type": "Ichidan",
+            "example": "古い電池を取り替えます。",
+            "exZh": "更换旧电池。",
+            "phrases": "服を取り替える / 部品を取り替える"
+      },
+      {
+            "level": "N4",
+            "kanji": "直す",
+            "kana": "なおす",
+            "zh": "修理；改正",
+            "type": "Godan",
+            "example": "壊れた時計を直します。",
+            "exZh": "修理坏掉的钟。",
+            "phrases": "間違いを直す / 自転車を直す"
+      },
+      {
+            "level": "N4",
+            "kanji": "治る",
+            "kana": "なおる",
+            "zh": "痊愈",
+            "type": "Godan",
+            "example": "風邪が治りました。",
+            "exZh": "感冒好了。",
+            "phrases": "病気が治る / けがが治る"
+      },
+      {
+            "level": "N4",
+            "kanji": "亡くなる",
+            "kana": "なくなる",
+            "zh": "去世",
+            "type": "Godan",
+            "example": "祖父は去年亡くなりました。",
+            "exZh": "祖父去年去世了。",
+            "phrases": "家族が亡くなる / 病気で亡くなる"
+      },
+      {
+            "level": "N4",
+            "kanji": "無くなる",
+            "kana": "なくなる",
+            "zh": "没有了；丢失",
+            "type": "Godan",
+            "example": "財布が無くなりました。",
+            "exZh": "钱包不见了。",
+            "phrases": "時間が無くなる / お金が無くなる"
+      },
+      {
+            "level": "N4",
+            "kanji": "泣く",
+            "kana": "なく",
+            "zh": "哭",
+            "type": "Godan",
+            "example": "赤ちゃんが泣いています。",
+            "exZh": "婴儿在哭。",
+            "phrases": "大声で泣く / 悲しくて泣く"
+      },
+      {
+            "level": "N4",
+            "kanji": "投げる",
+            "kana": "なげる",
+            "zh": "投；扔",
+            "type": "Ichidan",
+            "example": "ボールを投げます。",
+            "exZh": "扔球。",
+            "phrases": "石を投げる / 遠くへ投げる"
+      },
+      {
+            "level": "N4",
+            "kanji": "慣れる",
+            "kana": "なれる",
+            "zh": "习惯",
+            "type": "Ichidan",
+            "example": "新しい生活に慣れました。",
+            "exZh": "习惯了新生活。",
+            "phrases": "仕事に慣れる / 日本に慣れる"
+      },
+      {
+            "level": "N4",
+            "kanji": "逃げる",
+            "kana": "にげる",
+            "zh": "逃跑",
+            "type": "Ichidan",
+            "example": "犬が庭から逃げました。",
+            "exZh": "狗从院子里逃走了。",
+            "phrases": "すぐ逃げる / 危険から逃げる"
+      },
+      {
+            "level": "N4",
+            "kanji": "入院する",
+            "kana": "にゅういんする",
+            "zh": "住院",
+            "type": "Suru",
+            "example": "祖母が昨日入院しました。",
+            "exZh": "祖母昨天住院了。",
+            "phrases": "病院に入院する / 一週間入院する"
+      },
+      {
+            "level": "N4",
+            "kanji": "盗む",
+            "kana": "ぬすむ",
+            "zh": "偷",
+            "type": "Godan",
+            "example": "財布を盗まれました。",
+            "exZh": "钱包被偷了。",
+            "phrases": "お金を盗む / 物を盗む"
+      },
+      {
+            "level": "N4",
+            "kanji": "塗る",
+            "kana": "ぬる",
+            "zh": "涂；擦",
+            "type": "Godan",
+            "example": "壁にペンキを塗ります。",
+            "exZh": "在墙上刷油漆。",
+            "phrases": "薬を塗る / 色を塗る"
+      },
+      {
+            "level": "N4",
+            "kanji": "眠る",
+            "kana": "ねむる",
+            "zh": "睡着；睡眠",
+            "type": "Godan",
+            "example": "赤ちゃんがよく眠っています。",
+            "exZh": "婴儿睡得很好。",
+            "phrases": "深く眠る / 早く眠る"
+      },
+      {
+            "level": "N4",
+            "kanji": "残る",
+            "kana": "のこる",
+            "zh": "留下；剩下",
+            "type": "Godan",
+            "example": "皿にご飯が残っています。",
+            "exZh": "盘子里还剩饭。",
+            "phrases": "教室に残る / 記憶に残る"
+      },
+      {
+            "level": "N4",
+            "kanji": "乗り換える",
+            "kana": "のりかえる",
+            "zh": "换乘",
+            "type": "Ichidan",
+            "example": "新宿で電車を乗り換えます。",
+            "exZh": "在新宿换电车。",
+            "phrases": "バスに乗り換える / 地下鉄に乗り換える"
+      },
+      {
+            "level": "N4",
+            "kanji": "運ぶ",
+            "kana": "はこぶ",
+            "zh": "搬运",
+            "type": "Godan",
+            "example": "重い箱を運びます。",
+            "exZh": "搬运重箱子。",
+            "phrases": "荷物を運ぶ / 車で運ぶ"
+      },
+      {
+            "level": "N4",
+            "kanji": "始まる",
+            "kana": "はじまる",
+            "zh": "开始",
+            "type": "Godan",
+            "example": "授業は九時に始まります。",
+            "exZh": "课九点开始。",
+            "phrases": "映画が始まる / 会議が始まる"
+      },
+      {
+            "level": "N4",
+            "kanji": "始める",
+            "kana": "はじめる",
+            "zh": "开始做",
+            "type": "Ichidan",
+            "example": "新しい仕事を始めました。",
+            "exZh": "开始了新工作。",
+            "phrases": "勉強を始める / 店を始める"
+      },
+      {
+            "level": "N4",
+            "kanji": "払う",
+            "kana": "はらう",
+            "zh": "支付",
+            "type": "Godan",
+            "example": "カードで払います。",
+            "exZh": "用卡支付。",
+            "phrases": "お金を払う / 家賃を払う"
+      },
+      {
+            "level": "N4",
+            "kanji": "冷える",
+            "kana": "ひえる",
+            "zh": "变冷",
+            "type": "Ichidan",
+            "example": "夜は体が冷えます。",
+            "exZh": "晚上身体会变冷。",
+            "phrases": "足が冷える / 部屋が冷える"
+      },
+      {
+            "level": "N4",
+            "kanji": "光る",
+            "kana": "ひかる",
+            "zh": "发光",
+            "type": "Godan",
+            "example": "星がきれいに光っています。",
+            "exZh": "星星漂亮地发光。",
+            "phrases": "ライトが光る / 目が光る"
+      },
+      {
+            "level": "N4",
+            "kanji": "引き出す",
+            "kana": "ひきだす",
+            "zh": "取出；提款",
+            "type": "Godan",
+            "example": "銀行でお金を引き出します。",
+            "exZh": "在银行提款。",
+            "phrases": "お金を引き出す / 力を引き出す"
+      },
+      {
+            "level": "N4",
+            "kanji": "引っ越す",
+            "kana": "ひっこす",
+            "zh": "搬家",
+            "type": "Godan",
+            "example": "来月、大阪へ引っ越します。",
+            "exZh": "下个月搬到大阪。",
+            "phrases": "新しい家に引っ越す / 一人で引っ越す"
+      },
+      {
+            "level": "N4",
+            "kanji": "拾う",
+            "kana": "ひろう",
+            "zh": "捡",
+            "type": "Godan",
+            "example": "道で財布を拾いました。",
+            "exZh": "在路上捡到钱包。",
+            "phrases": "ごみを拾う / 落ちた物を拾う"
+      },
+      {
+            "level": "N4",
+            "kanji": "増える",
+            "kana": "ふえる",
+            "zh": "增加",
+            "type": "Ichidan",
+            "example": "仕事が増えました。",
+            "exZh": "工作增加了。",
+            "phrases": "人が増える / 体重が増える"
+      },
+      {
+            "level": "N4",
+            "kanji": "太る",
+            "kana": "ふとる",
+            "zh": "发胖",
+            "type": "Godan",
+            "example": "最近少し太りました。",
+            "exZh": "最近胖了一点。",
+            "phrases": "食べ過ぎて太る / すぐ太る"
+      },
+      {
+            "level": "N4",
+            "kanji": "踏む",
+            "kana": "ふむ",
+            "zh": "踩",
+            "type": "Godan",
+            "example": "電車で足を踏まれました。",
+            "exZh": "在电车上脚被踩了。",
+            "phrases": "足を踏む / ブレーキを踏む"
+      },
+      {
+            "level": "N4",
+            "kanji": "褒める",
+            "kana": "ほめる",
+            "zh": "表扬",
+            "type": "Ichidan",
+            "example": "先生が学生を褒めました。",
+            "exZh": "老师表扬了学生。",
+            "phrases": "子どもを褒める / よく褒める"
+      },
+      {
+            "level": "N4",
+            "kanji": "参る",
+            "kana": "まいる",
+            "zh": "来；去（谦让）",
+            "type": "Godan",
+            "example": "明日、そちらへ参ります。",
+            "exZh": "明天我过去您那里。",
+            "phrases": "会社へ参る / すぐ参る"
+      },
+      {
+            "level": "N4",
+            "kanji": "負ける",
+            "kana": "まける",
+            "zh": "输",
+            "type": "Ichidan",
+            "example": "試合に負けました。",
+            "exZh": "比赛输了。",
+            "phrases": "ゲームに負ける / 絶対負けない"
+      },
+      {
+            "level": "N4",
+            "kanji": "間違える",
+            "kana": "まちがえる",
+            "zh": "弄错",
+            "type": "Ichidan",
+            "example": "答えを間違えました。",
+            "exZh": "答错了。",
+            "phrases": "道を間違える / 名前を間違える"
+      },
+      {
+            "level": "N4",
+            "kanji": "間に合う",
+            "kana": "まにあう",
+            "zh": "赶得上",
+            "type": "Godan",
+            "example": "電車に間に合いました。",
+            "exZh": "赶上了电车。",
+            "phrases": "時間に間に合う / 授業に間に合う"
+      },
+      {
+            "level": "N4",
+            "kanji": "見える",
+            "kana": "みえる",
+            "zh": "看得见",
+            "type": "Ichidan",
+            "example": "ここから海が見えます。",
+            "exZh": "从这里看得见海。",
+            "phrases": "山が見える / よく見える"
+      },
+      {
+            "level": "N4",
+            "kanji": "見つかる",
+            "kana": "みつかる",
+            "zh": "被找到；找到",
+            "type": "Godan",
+            "example": "なくした鍵が見つかりました。",
+            "exZh": "丢失的钥匙找到了。",
+            "phrases": "仕事が見つかる / すぐ見つかる"
+      },
+      {
+            "level": "N4",
+            "kanji": "見つける",
+            "kana": "みつける",
+            "zh": "找到",
+            "type": "Ichidan",
+            "example": "駅で友だちを見つけました。",
+            "exZh": "在车站找到了朋友。",
+            "phrases": "答えを見つける / 仕事を見つける"
+      },
+      {
+            "level": "N4",
+            "kanji": "迎える",
+            "kana": "むかえる",
+            "zh": "迎接",
+            "type": "Ichidan",
+            "example": "空港で友だちを迎えます。",
+            "exZh": "在机场迎接朋友。",
+            "phrases": "客を迎える / 朝を迎える"
+      },
+      {
+            "level": "N4",
+            "kanji": "申し上げる",
+            "kana": "もうしあげる",
+            "zh": "说（谦让）",
+            "type": "Ichidan",
+            "example": "心からお礼を申し上げます。",
+            "exZh": "衷心表示感谢。",
+            "phrases": "お礼を申し上げる / ご挨拶申し上げる"
+      },
+      {
+            "level": "N4",
+            "kanji": "申す",
+            "kana": "もうす",
+            "zh": "叫做；说（谦让）",
+            "type": "Godan",
+            "example": "田中と申します。",
+            "exZh": "我叫田中。",
+            "phrases": "名前を申す / はっきり申す"
+      },
+      {
+            "level": "N4",
+            "kanji": "戻す",
+            "kana": "もどす",
+            "zh": "放回；恢复",
+            "type": "Godan",
+            "example": "本を棚に戻します。",
+            "exZh": "把书放回书架。",
+            "phrases": "元に戻す / お金を戻す"
+      },
+      {
+            "level": "N4",
+            "kanji": "戻る",
+            "kana": "もどる",
+            "zh": "返回",
+            "type": "Godan",
+            "example": "すぐ会社に戻ります。",
+            "exZh": "马上回公司。",
+            "phrases": "家に戻る / 元に戻る"
+      },
+      {
+            "level": "N4",
+            "kanji": "焼く",
+            "kana": "やく",
+            "zh": "烤；烧",
+            "type": "Godan",
+            "example": "魚を焼きます。",
+            "exZh": "烤鱼。",
+            "phrases": "パンを焼く / 肉を焼く"
+      },
+      {
+            "level": "N4",
+            "kanji": "焼ける",
+            "kana": "やける",
+            "zh": "烤好；烧毁",
+            "type": "Ichidan",
+            "example": "パンが焼けました。",
+            "exZh": "面包烤好了。",
+            "phrases": "肉が焼ける / 家が焼ける"
+      },
+      {
+            "level": "N4",
+            "kanji": "役に立つ",
+            "kana": "やくにたつ",
+            "zh": "有用",
+            "type": "Expression",
+            "example": "この本は勉強に役に立ちます。",
+            "exZh": "这本书对学习有用。",
+            "phrases": "仕事に役に立つ / とても役に立つ"
+      },
+      {
+            "level": "N4",
+            "kanji": "痩せる",
+            "kana": "やせる",
+            "zh": "变瘦",
+            "type": "Ichidan",
+            "example": "運動して少し痩せました。",
+            "exZh": "运动后瘦了一点。",
+            "phrases": "健康に痩せる / 急に痩せる"
+      },
+      {
+            "level": "N4",
+            "kanji": "止む",
+            "kana": "やむ",
+            "zh": "停止（雨雪等）",
+            "type": "Godan",
+            "example": "雨が止みました。",
+            "exZh": "雨停了。",
+            "phrases": "雪が止む / 風が止む"
+      },
+      {
+            "level": "N4",
+            "kanji": "用意する",
+            "kana": "よういする",
+            "zh": "准备",
+            "type": "Suru",
+            "example": "明日の服を用意します。",
+            "exZh": "准备明天的衣服。",
+            "phrases": "資料を用意する / 食事を用意する"
+      },
+      {
+            "level": "N4",
+            "kanji": "喜ぶ",
+            "kana": "よろこぶ",
+            "zh": "高兴",
+            "type": "Godan",
+            "example": "妹はプレゼントを喜びました。",
+            "exZh": "妹妹很喜欢礼物。",
+            "phrases": "とても喜ぶ / 心から喜ぶ"
+      },
+      {
+            "level": "N4",
+            "kanji": "汚れる",
+            "kana": "よごれる",
+            "zh": "变脏",
+            "type": "Ichidan",
+            "example": "シャツが汚れました。",
+            "exZh": "衬衫脏了。",
+            "phrases": "服が汚れる / 手が汚れる"
+      },
+      {
+            "level": "N4",
+            "kanji": "寄る",
+            "kana": "よる",
+            "zh": "顺路去；靠近",
+            "type": "Godan",
+            "example": "帰りにスーパーへ寄ります。",
+            "exZh": "回家路上顺便去超市。",
+            "phrases": "店に寄る / 近くに寄る"
+      },
+      {
+            "level": "N4",
+            "kanji": "沸かす",
+            "kana": "わかす",
+            "zh": "烧开",
+            "type": "Godan",
+            "example": "お茶のために水を沸かします。",
+            "exZh": "为了泡茶烧水。",
+            "phrases": "お湯を沸かす / 風呂を沸かす"
+      },
+      {
+            "level": "N4",
+            "kanji": "沸く",
+            "kana": "わく",
+            "zh": "沸腾",
+            "type": "Godan",
+            "example": "お湯が沸きました。",
+            "exZh": "热水开了。",
+            "phrases": "水が沸く / 風呂が沸く"
+      },
+      {
+            "level": "N4",
+            "kanji": "笑う",
+            "kana": "わらう",
+            "zh": "笑",
+            "type": "Godan",
+            "example": "みんなで大きく笑いました。",
+            "exZh": "大家一起大笑。",
+            "phrases": "声を出して笑う / よく笑う"
+      },
+      {
+            "level": "N4",
+            "kanji": "割れる",
+            "kana": "われる",
+            "zh": "破裂；碎",
+            "type": "Ichidan",
+            "example": "コップが割れました。",
+            "exZh": "杯子碎了。",
+            "phrases": "皿が割れる / 意見が割れる"
+      },
+      {
+            "level": "N4",
+            "kanji": "割る",
+            "kana": "わる",
+            "zh": "打破；分割",
+            "type": "Godan",
+            "example": "卵を割ります。",
+            "exZh": "打鸡蛋。",
+            "phrases": "コップを割る / 数を割る"
+      }
+];
+
+    const grid = document.querySelector("#grid");
+    const count = document.querySelector("#count");
+    const empty = document.querySelector("#empty");
+    const search = document.querySelector("#search");
+    const levelButtons = document.querySelectorAll("[data-level]");
+    const shuffleButton = document.querySelector("#shuffle");
+    const toggleAnswersButton = document.querySelector("#toggleAnswers");
+    const template = document.querySelector("#cardTemplate");
+
+    let activeLevel = "all";
+    let answersHidden = false;
+    let visibleVerbs = [...verbs];
+
+    function rubyFor(kanji, kana) {
+      if (kanji === kana || !/[一-龯]/.test(kanji)) return kanji;
+      return `<ruby>${kanji}<rt>${kana}</rt></ruby>`;
+    }
+
+    function normalize(text) {
+      return text.toLowerCase().replace(/\s+/g, "");
+    }
+
+    function render() {
+      const q = normalize(search.value);
+      visibleVerbs = verbs.filter((verb) => {
+        const levelMatch = activeLevel === "all" || verb.level === activeLevel;
+        const haystack = normalize(`${verb.level}${verb.kanji}${verb.kana}${verb.zh}${verb.type}${verb.example}${verb.exZh}${verb.phrases}`);
+        return levelMatch && haystack.includes(q);
+      });
+
+      grid.innerHTML = "";
+      const fragment = document.createDocumentFragment();
+      visibleVerbs.forEach((verb) => {
+        const node = template.content.cloneNode(true);
+        const card = node.querySelector(".card");
+        card.classList.toggle("hidden", answersHidden);
+        node.querySelector(".verb").innerHTML = rubyFor(verb.kanji, verb.kana);
+        node.querySelector(".kana").textContent = verb.kana;
+        node.querySelector(".translation").textContent = verb.zh;
+        node.querySelector(".level").textContent = verb.level;
+        node.querySelector(".level").classList.toggle("n4", verb.level === "N4");
+        node.querySelector(".sentence").textContent = `${verb.example} ${verb.exZh}`;
+        node.querySelector(".phrases").textContent = verb.phrases;
+
+        const meta = node.querySelector(".meta");
+        [verb.type, verb.level === "N5" ? "basic verb" : "core verb"].forEach((item) => {
+          const chip = document.createElement("span");
+          chip.className = "chip";
+          chip.textContent = item;
+          meta.appendChild(chip);
+        });
+        fragment.appendChild(node);
+      });
+
+      grid.appendChild(fragment);
+      count.textContent = `${visibleVerbs.length} of ${verbs.length} verbs`;
+      empty.classList.toggle("show", visibleVerbs.length === 0);
+    }
+
+    levelButtons.forEach((button) => {
+      button.addEventListener("click", () => {
+        activeLevel = button.dataset.level;
+        levelButtons.forEach((item) => item.classList.toggle("active", item === button));
+        render();
+      });
+    });
+
+    search.addEventListener("input", render);
+
+    toggleAnswersButton.addEventListener("click", () => {
+      answersHidden = !answersHidden;
+      toggleAnswersButton.textContent = answersHidden ? "Show" : "Hide";
+      document.querySelectorAll(".card").forEach((card) => card.classList.toggle("hidden", answersHidden));
+    });
+
+    shuffleButton.addEventListener("click", () => {
+      for (let i = verbs.length - 1; i > 0; i -= 1) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [verbs[i], verbs[j]] = [verbs[j], verbs[i]];
+      }
+      render();
+    });
+
+    render();
+  </script>
+</body>
+</html>
