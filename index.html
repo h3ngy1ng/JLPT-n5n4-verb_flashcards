@@ -249,198 +249,366 @@
     .motion-scene {
       position: relative;
       display: grid;
-      grid-template-columns: 112px minmax(0, 1fr);
+      grid-template-columns: 140px minmax(0, 1fr);
       gap: 12px;
       align-items: center;
-      min-height: 104px;
+      min-height: 128px;
       padding: 10px;
-      border: 1px solid rgba(15, 118, 110, 0.16);
+      border: 1px solid rgba(15, 118, 110, 0.18);
       border-radius: 8px;
-      background: linear-gradient(135deg, #f7fffc 0%, #fffaf1 100%);
+      background: linear-gradient(135deg, #f6fffb 0%, #fff8e8 100%);
       overflow: hidden;
     }
 
     .motion-stage {
-      --torso-rot: 0deg;
-      --left-arm: -46deg;
-      --right-arm: 46deg;
-      --left-leg: 22deg;
-      --right-leg: -22deg;
-      --human-x: 0px;
-      --human-y: 0px;
-      --kana-tilt: 0deg;
+      --kid-tilt: 0deg;
+      --kid-x: 0px;
+      --kid-y: 0px;
+      --left-arm: -36deg;
+      --right-arm: 36deg;
+      --left-leg: 26deg;
+      --right-leg: -26deg;
+      --face-tilt: 0deg;
+      --prop-x: 0px;
+      --prop-y: 0px;
+      --prop-rot: 0deg;
+      --scene-bg: #fef3c7;
+      --scene-ground: #bbf7d0;
       position: relative;
-      display: grid;
-      place-items: center;
-      width: 98px;
-      height: 82px;
+      width: 134px;
+      height: 116px;
       border-radius: 8px;
-      background: rgba(255, 255, 255, 0.74);
+      background:
+        linear-gradient(180deg, var(--scene-bg) 0 68%, var(--scene-ground) 69% 100%),
+        radial-gradient(circle at 50% 82%, rgba(15, 118, 110, 0.12), rgba(15, 118, 110, 0) 48%),
+        rgba(255, 255, 255, 0.78);
       overflow: hidden;
+      isolation: isolate;
     }
 
-    #threeLayer {
-      position: fixed;
-      inset: 0;
-      z-index: 4;
-      width: 100vw;
-      height: 100vh;
+    .motion-stage::before,
+    .motion-stage::after {
+      content: "";
+      position: absolute;
+      z-index: 0;
       pointer-events: none;
     }
 
-    .three-ready .human-pose,
-    .three-ready .action-prop,
-    .three-ready .motion-shadow {
-      opacity: 0;
+    .motion-stage::before {
+      left: 7px;
+      right: 7px;
+      bottom: 21px;
+      height: 2px;
+      border-radius: 999px;
+      background: rgba(25, 33, 42, 0.16);
     }
 
-    .three-ready .motion-stage {
-      background:
-        radial-gradient(circle at 50% 76%, rgba(15, 118, 110, 0.13), rgba(15, 118, 110, 0) 42%),
-        rgba(255, 255, 255, 0.74);
-    }
-
-    .kana-outline {
-      position: absolute;
-      inset: 4px;
-      display: grid;
-      place-items: center;
-      color: rgba(15, 118, 110, 0.08);
-      font-family: "Yu Gothic", "Meiryo", "Hiragino Sans", sans-serif;
-      font-size: 2.35rem;
-      font-weight: 900;
-      letter-spacing: 0;
-      line-height: 0.9;
-      text-align: center;
-      transform: rotate(var(--kana-tilt)) scale(1.05);
-      -webkit-text-stroke: 1px rgba(15, 118, 110, 0.34);
-      text-shadow: 0 1px 0 rgba(255, 255, 255, 0.85);
-      white-space: nowrap;
-    }
-
-    .motion-shadow {
-      position: absolute;
-      bottom: 9px;
-      left: 31px;
-      width: 42px;
-      height: 7px;
+    .motion-stage::after {
+      top: 9px;
+      right: 8px;
+      width: 22px;
+      height: 22px;
       border-radius: 50%;
-      background: rgba(25, 33, 42, 0.14);
-      transform-origin: center;
-      animation: shadowPulse 1.8s ease-in-out infinite;
+      background: rgba(250, 204, 21, 0.72);
+      box-shadow: 0 0 0 8px rgba(250, 204, 21, 0.18);
     }
 
-    .human-pose {
+    .pose-kanji {
+      position: absolute;
+      inset: 3px 0 auto 0;
+      z-index: 0;
+      color: rgba(15, 118, 110, 0.13);
+      font-family: "Yu Mincho", "MS Mincho", serif;
+      font-size: 4.4rem;
+      font-weight: 900;
+      line-height: 1;
+      text-align: center;
+      -webkit-text-stroke: 1px rgba(15, 118, 110, 0.28);
+      transform: rotate(-5deg) scaleX(1.04);
+      pointer-events: none;
+    }
+
+    .pose-meaning {
+      position: absolute;
+      right: 6px;
+      bottom: 5px;
+      z-index: 0;
+      color: rgba(180, 83, 9, 0.18);
+      font-size: 0.72rem;
+      font-weight: 900;
+      writing-mode: vertical-rl;
+      letter-spacing: 0;
+    }
+
+    .scene-sfx {
+      position: absolute;
+      left: 7px;
+      top: 7px;
+      z-index: 2;
+      max-width: 48px;
+      padding: 3px 6px;
+      border: 2px solid rgba(25, 33, 42, 0.78);
+      border-radius: 999px 999px 999px 3px;
+      background: rgba(255, 255, 255, 0.88);
+      color: #17202a;
+      font-size: 0.62rem;
+      font-weight: 900;
+      line-height: 1;
+      letter-spacing: 0;
+      transform: rotate(-7deg);
+      animation: sfxPop 1.2s ease-in-out infinite;
+    }
+
+    .kid-shadow {
+      position: absolute;
+      left: 36px;
+      bottom: 8px;
+      width: 42px;
+      height: 8px;
+      border-radius: 50%;
+      background: rgba(25, 33, 42, 0.16);
+      animation: kidShadow 1.3s ease-in-out infinite;
+    }
+
+    .meaning-prop {
+      position: absolute;
+      left: 72px;
+      top: 34px;
+      z-index: 2;
+      color: #b45309;
+      font-size: 1.4rem;
+      font-weight: 900;
+      line-height: 1;
+      transform: translate(var(--prop-x), var(--prop-y)) rotate(var(--prop-rot));
+      animation: propAct 1.25s ease-in-out infinite;
+      text-shadow: 0 1px 0 #fff;
+    }
+
+    .kid {
       position: absolute;
       left: 50%;
-      bottom: 15px;
-      width: 44px;
-      height: 58px;
-      z-index: 2;
-      color: var(--accent);
-      transform: translate(calc(-50% + var(--human-x)), var(--human-y)) rotate(var(--torso-rot));
-      transform-origin: 50% 68%;
-      animation: humanBreathe 1.8s ease-in-out infinite;
+      bottom: 12px;
+      z-index: 3;
+      width: 56px;
+      height: 76px;
+      transform: translate(calc(-50% + var(--kid-x)), var(--kid-y)) rotate(var(--kid-tilt));
+      transform-origin: 50% 78%;
+      animation: kidBreathe 1.5s ease-in-out infinite;
     }
 
-    .human-head {
+    .kid-face {
       position: absolute;
-      left: 14px;
+      left: 50%;
       top: 0;
-      width: 16px;
-      height: 16px;
-      border: 2px solid currentColor;
+      width: 36px;
+      height: 32px;
+      border: 2px solid #17202a;
+      border-radius: 43% 49% 45% 47%;
+      background: #ffd9b1;
+      box-shadow: inset -5px -3px 0 rgba(180, 83, 9, 0.13);
+      transform: translateX(-50%) rotate(var(--face-tilt));
+      animation: faceWiggle 1.6s ease-in-out infinite;
+    }
+
+    .kid-hair {
+      position: absolute;
+      left: 50%;
+      top: -6px;
+      width: 38px;
+      height: 12px;
+      border-radius: 999px 999px 9px 9px;
+      background: #17202a;
+      transform: translateX(-50%) rotate(-5deg);
+    }
+
+    .kid-hair::before,
+    .kid-hair::after {
+      content: "";
+      position: absolute;
+      top: -4px;
+      width: 12px;
+      height: 8px;
+      border-radius: 999px 999px 0 0;
+      background: #17202a;
+    }
+
+    .kid-hair::before { left: 3px; transform: rotate(-22deg); }
+    .kid-hair::after { right: 4px; transform: rotate(18deg); }
+
+    .kid-brow {
+      position: absolute;
+      top: 10px;
+      width: 11px;
+      height: 3px;
+      border-radius: 999px;
+      background: #17202a;
+    }
+
+    .kid-brow.left { left: 6px; transform: rotate(13deg); }
+    .kid-brow.right { right: 6px; transform: rotate(-13deg); }
+
+    .kid-eye {
+      position: absolute;
+      top: 15px;
+      width: 4px;
+      height: 4px;
       border-radius: 50%;
+      background: #17202a;
+    }
+
+    .kid-eye.left { left: 10px; }
+    .kid-eye.right { right: 10px; }
+
+    .kid-cheek {
+      position: absolute;
+      top: 19px;
+      width: 7px;
+      height: 4px;
+      border-radius: 50%;
+      background: rgba(244, 114, 101, 0.38);
+    }
+
+    .kid-cheek.left { left: 3px; }
+    .kid-cheek.right { right: 3px; }
+
+    .kid-mouth {
+      position: absolute;
+      left: 50%;
+      bottom: 5px;
+      width: 13px;
+      height: 6px;
+      border-bottom: 2px solid #17202a;
+      border-radius: 0 0 999px 999px;
+      transform: translateX(-50%);
+    }
+
+    .kid-shirt {
+      position: absolute;
+      left: 50%;
+      top: 30px;
+      width: 34px;
+      height: 25px;
+      border: 2px solid #17202a;
+      border-radius: 9px 9px 6px 6px;
+      background: #ef4444;
+      transform: translateX(-50%);
+    }
+
+    .kid-shirt::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      top: 5px;
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #ffffff;
+      transform: translateX(-50%);
+      opacity: 0.72;
+    }
+
+    .kid-shorts {
+      position: absolute;
+      left: 50%;
+      top: 52px;
+      width: 30px;
+      height: 12px;
+      border: 2px solid #17202a;
+      border-radius: 3px 3px 7px 7px;
+      background: #facc15;
+      transform: translateX(-50%);
+    }
+
+    .kid-shorts::before {
+      content: "";
+      position: absolute;
+      left: 50%;
+      top: -1px;
+      width: 2px;
+      height: 12px;
+      background: rgba(25, 33, 42, 0.55);
+      transform: translateX(-50%);
+    }
+
+    .kid-arm,
+    .kid-leg {
+      position: absolute;
+      left: 50%;
+      display: block;
+      border: 2px solid #17202a;
+      border-radius: 999px;
+      background: #ffd9b1;
+      transform-origin: 50% 50%;
+    }
+
+    .kid-arm {
+      top: 37px;
+      width: 34px;
+      height: 7px;
+    }
+
+    .kid-arm.left { transform: translateX(-98%) rotate(var(--left-arm)); }
+    .kid-arm.right { transform: translateX(-2%) rotate(var(--right-arm)); }
+
+    .kid-leg {
+      top: 62px;
+      width: 30px;
+      height: 8px;
+      background: #ffd9b1;
+    }
+
+    .kid-leg.left { transform: translateX(-92%) rotate(var(--left-leg)); }
+    .kid-leg.right { transform: translateX(-8%) rotate(var(--right-leg)); }
+
+    .kid-shoe {
+      position: absolute;
+      top: 67px;
+      width: 14px;
+      height: 7px;
+      border: 2px solid #17202a;
+      border-radius: 999px;
       background: #ffffff;
     }
 
-    .human-head::after {
-      content: "";
-      position: absolute;
-      left: 9px;
-      top: 5px;
-      width: 3px;
-      height: 3px;
-      border-radius: 50%;
-      background: currentColor;
-      box-shadow: -5px 0 0 currentColor;
-    }
+    .kid-shoe.left { left: 6px; transform: rotate(var(--left-leg)); }
+    .kid-shoe.right { right: 6px; transform: rotate(var(--right-leg)); }
 
-    .human-torso,
-    .human-arm,
-    .human-leg {
+    .kanji-stroke {
       position: absolute;
+      z-index: 1;
       display: block;
       border-radius: 999px;
-      background: currentColor;
-      transform-origin: 50% 0%;
+      background: rgba(15, 118, 110, 0.5);
+      transform-origin: center;
+      mix-blend-mode: multiply;
     }
 
-    .human-torso {
-      left: 20px;
-      top: 16px;
-      width: 4px;
-      height: 24px;
-    }
+    .kanji-stroke.s1 { left: 20px; top: 21px; width: 72px; height: 5px; }
+    .kanji-stroke.s2 { left: 53px; top: 18px; width: 5px; height: 56px; }
+    .kanji-stroke.s3 { left: 28px; top: 64px; width: 60px; height: 5px; }
+    .kanji-stroke.s4 { left: 27px; top: 36px; width: 58px; height: 5px; transform: rotate(-28deg); }
 
-    .human-arm {
-      top: 19px;
-      width: 4px;
-      height: 24px;
-    }
-
-    .human-arm.left {
-      left: 20px;
-      transform: rotate(var(--left-arm));
-    }
-
-    .human-arm.right {
-      left: 20px;
-      transform: rotate(var(--right-arm));
-    }
-
-    .human-leg {
-      top: 38px;
-      width: 4px;
-      height: 25px;
-      color: var(--accent-2);
-      background: currentColor;
-    }
-
-    .human-leg.left {
-      left: 20px;
-      transform: rotate(var(--left-leg));
-    }
-
-    .human-leg.right {
-      left: 20px;
-      transform: rotate(var(--right-leg));
-    }
-
-    .action-prop {
+    .motion-lines {
       position: absolute;
-      z-index: 1;
-      right: 14px;
-      bottom: 20px;
-      color: var(--accent-2);
-      font-size: 1.1rem;
-      font-weight: 900;
-      line-height: 1;
-      animation: propPulse 1.6s ease-in-out infinite;
+      inset: 0;
+      z-index: 4;
+      pointer-events: none;
     }
 
-    .motion-trail {
+    .motion-lines::before,
+    .motion-lines::after {
+      content: "";
       position: absolute;
-      top: 5px;
-      right: 5px;
-      z-index: 1;
-      color: rgba(180, 83, 9, 0.56);
-      font-size: 0.72rem;
-      font-weight: 800;
-      letter-spacing: 0;
-      writing-mode: vertical-rl;
-      animation: trailFloat 2.2s ease-in-out infinite;
+      border: 2px solid rgba(180, 83, 9, 0.45);
+      border-left: 0;
+      border-bottom: 0;
+      border-radius: 50%;
+      opacity: 0.75;
+      animation: motionArc 1.2s ease-in-out infinite;
     }
+
+    .motion-lines::before { right: 18px; top: 16px; width: 28px; height: 26px; }
+    .motion-lines::after { right: 8px; top: 28px; width: 36px; height: 34px; animation-delay: 0.18s; }
 
     .motion-caption {
       min-width: 0;
@@ -455,104 +623,142 @@
       font-size: 0.88rem;
     }
 
-    .motion-scene.walk .human-pose,
-    .motion-scene.go .human-pose,
-    .motion-scene.return .human-pose,
-    .motion-scene.run .human-pose { animation-name: humanWalk; }
-    .motion-scene.open .human-arm.left { animation: openLeftArm 1.4s ease-in-out infinite; }
-    .motion-scene.open .human-arm.right { animation: openRightArm 1.4s ease-in-out infinite; }
-    .motion-scene.close .human-arm.left { animation: closeLeftArm 1.4s ease-in-out infinite; }
-    .motion-scene.close .human-arm.right { animation: closeRightArm 1.4s ease-in-out infinite; }
-    .motion-scene.lift .human-pose { animation-name: humanLift; }
-    .motion-scene.drop .human-pose { animation-name: humanDrop; }
-    .motion-scene.speak .human-head { animation: humanSpeak 0.75s ease-in-out infinite; }
-    .motion-scene.listen .human-head { animation: humanListen 1.2s ease-in-out infinite; }
-    .motion-scene.eat .human-head { animation: humanEat 0.9s ease-in-out infinite; }
-    .motion-scene.drink .human-pose { animation-name: humanDrink; }
-    .motion-scene.sleep .human-pose { animation-name: humanSleep; }
-    .motion-scene.sleep .motion-trail::after { content: " zzz"; }
-    .motion-scene.search .human-pose { animation-name: humanSearch; }
-    .motion-scene.write .human-arm.right { animation: humanWrite 1s ease-in-out infinite; }
-    .motion-scene.cut .human-arm.right { animation: humanCut 0.9s ease-in-out infinite; }
-    .motion-scene.clean .human-pose { animation-name: humanScrub; }
-    .motion-scene.ride .human-pose { animation-name: humanRide; }
-    .motion-scene.fly .human-pose { animation-name: humanFly; }
-    .motion-scene.rain .motion-trail { animation-name: rainFall; }
-    .motion-scene.turn .human-pose { animation-name: humanTurn; }
-    .motion-scene.wait .human-pose { animation-name: humanWait; }
-    .motion-scene.hold .human-arm.left,
-    .motion-scene.hold .human-arm.right { animation: humanHold 1.2s ease-in-out infinite; }
-    .motion-scene.think .human-head { animation: humanThink 1.6s ease-in-out infinite; }
-    .motion-scene.gather .human-arm.left { animation: gatherLeftArm 1.2s ease-in-out infinite; }
-    .motion-scene.gather .human-arm.right { animation: gatherRightArm 1.2s ease-in-out infinite; }
-    .motion-scene.throw .human-pose { animation-name: humanThrow; }
-    .motion-scene.catch .human-arm.left,
-    .motion-scene.catch .human-arm.right { animation: humanCatch 1.1s ease-in-out infinite; }
-    .motion-scene.break .human-pose { animation-name: humanBreak; }
-    .motion-scene.fix .human-arm.right { animation: humanFix 0.9s ease-in-out infinite; }
-    .motion-scene.pay .human-pose { animation-name: humanBow; }
-    .motion-scene.shine .action-prop { animation-name: sparkleTrail; }
-    .motion-scene.dance .human-pose { animation-name: humanDance; }
-    .motion-scene.cry .human-head { animation: cryShake 0.9s ease-in-out infinite; }
-    .motion-scene.laugh .human-head { animation: laughBounce 0.8s ease-in-out infinite; }
-    .motion-scene.help .human-arm.right { animation: helpWave 1.1s ease-in-out infinite; }
-    .motion-scene.invite .human-arm.right { animation: inviteWave 1.2s ease-in-out infinite; }
-    .motion-scene.fish .human-pose { animation-name: fishCast; }
-    .motion-scene.cook .human-pose { animation-name: cookFlip; }
-    .motion-scene.bloom .action-prop { animation-name: bloomTrail; }
+    .motion-caption span {
+      display: block;
+      margin-top: 3px;
+    }
 
-    @keyframes humanBreathe { 0%, 100% { transform: translate(calc(-50% + var(--human-x)), var(--human-y)) rotate(var(--torso-rot)); } 50% { transform: translate(calc(-50% + var(--human-x)), calc(var(--human-y) - 3px)) rotate(calc(var(--torso-rot) + 2deg)); } }
-    @keyframes shadowPulse { 0%, 100% { transform: scaleX(1); opacity: 0.6; } 50% { transform: scaleX(0.72); opacity: 0.35; } }
-    @keyframes propPulse { 0%, 100% { transform: translateY(0) scale(1); opacity: 0.75; } 50% { transform: translateY(-5px) scale(1.12); opacity: 1; } }
-    @keyframes trailFloat { 0%, 100% { transform: translateY(0); opacity: 0.48; } 50% { transform: translateY(-7px); opacity: 0.9; } }
-    @keyframes humanWalk { 0%, 100% { transform: translate(calc(-50% + var(--human-x) - 8px), var(--human-y)) rotate(calc(var(--torso-rot) - 6deg)); } 50% { transform: translate(calc(-50% + var(--human-x) + 8px), calc(var(--human-y) - 3px)) rotate(calc(var(--torso-rot) + 6deg)); } }
-    @keyframes openLeftArm { 0%, 100% { transform: rotate(-28deg); } 50% { transform: rotate(-92deg); } }
-    @keyframes openRightArm { 0%, 100% { transform: rotate(28deg); } 50% { transform: rotate(92deg); } }
-    @keyframes closeLeftArm { 0%, 100% { transform: rotate(-92deg); } 50% { transform: rotate(-18deg); } }
-    @keyframes closeRightArm { 0%, 100% { transform: rotate(92deg); } 50% { transform: rotate(18deg); } }
-    @keyframes humanLift { 0%, 100% { transform: translate(calc(-50% + var(--human-x)), calc(var(--human-y) + 4px)) rotate(var(--torso-rot)); } 50% { transform: translate(calc(-50% + var(--human-x)), calc(var(--human-y) - 14px)) rotate(var(--torso-rot)); } }
-    @keyframes humanDrop { 0%, 100% { transform: translate(calc(-50% + var(--human-x)), calc(var(--human-y) - 10px)) rotate(var(--torso-rot)); } 55% { transform: translate(calc(-50% + var(--human-x)), calc(var(--human-y) + 7px)) rotate(calc(var(--torso-rot) + 12deg)); } }
-    @keyframes humanSpeak { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.15, 0.86); } }
-    @keyframes humanListen { 0%, 100% { transform: rotate(-10deg); } 50% { transform: rotate(12deg); } }
-    @keyframes humanEat { 0%, 100% { transform: translateY(0); } 45% { transform: translateY(5px) scale(1.08); } }
-    @keyframes humanDrink { 0%, 100% { transform: translate(calc(-50% + var(--human-x)), var(--human-y)) rotate(var(--torso-rot)); } 50% { transform: translate(calc(-50% + var(--human-x)), var(--human-y)) rotate(calc(var(--torso-rot) - 18deg)); } }
-    @keyframes humanSleep { 0%, 100% { transform: translate(calc(-50% + var(--human-x)), var(--human-y)) rotate(calc(var(--torso-rot) - 18deg)); } 50% { transform: translate(calc(-50% + var(--human-x)), calc(var(--human-y) - 2px)) rotate(calc(var(--torso-rot) - 10deg)); } }
-    @keyframes humanSearch { 0%, 100% { transform: translate(calc(-50% + var(--human-x) - 5px), var(--human-y)) rotate(calc(var(--torso-rot) - 10deg)); } 50% { transform: translate(calc(-50% + var(--human-x) + 6px), var(--human-y)) rotate(calc(var(--torso-rot) + 10deg)); } }
-    @keyframes humanWrite { 0%, 100% { transform: rotate(36deg); } 50% { transform: rotate(78deg); } }
-    @keyframes humanCut { 0%, 100% { transform: rotate(72deg); } 50% { transform: rotate(18deg); } }
-    @keyframes humanScrub { 0%, 100% { transform: translate(calc(-50% + var(--human-x) - 5px), var(--human-y)) rotate(calc(var(--torso-rot) - 5deg)); } 50% { transform: translate(calc(-50% + var(--human-x) + 5px), var(--human-y)) rotate(calc(var(--torso-rot) + 5deg)); } }
-    @keyframes humanRide { 0%, 100% { transform: translate(calc(-50% + var(--human-x) - 5px), calc(var(--human-y) + 2px)) rotate(var(--torso-rot)); } 50% { transform: translate(calc(-50% + var(--human-x) + 7px), calc(var(--human-y) - 7px)) rotate(calc(var(--torso-rot) + 5deg)); } }
-    @keyframes humanFly { 0%, 100% { transform: translate(calc(-50% + var(--human-x) - 10px), calc(var(--human-y) + 5px)) rotate(calc(var(--torso-rot) - 10deg)); } 50% { transform: translate(calc(-50% + var(--human-x) + 12px), calc(var(--human-y) - 13px)) rotate(calc(var(--torso-rot) + 12deg)); } }
-    @keyframes rainFall { 0% { transform: translateY(-12px); opacity: 0.2; } 100% { transform: translateY(18px); opacity: 0.9; } }
-    @keyframes humanTurn { 0%, 100% { transform: translate(calc(-50% + var(--human-x)), var(--human-y)) rotate(calc(var(--torso-rot) - 18deg)); } 50% { transform: translate(calc(-50% + var(--human-x)), var(--human-y)) rotate(calc(var(--torso-rot) + 18deg)); } }
-    @keyframes humanWait { 0%, 100% { transform: translate(calc(-50% + var(--human-x)), var(--human-y)) rotate(var(--torso-rot)); } 50% { transform: translate(calc(-50% + var(--human-x)), calc(var(--human-y) - 2px)) rotate(var(--torso-rot)); } }
-    @keyframes humanHold { 0%, 100% { transform: rotate(28deg); } 50% { transform: rotate(52deg); } }
-    @keyframes humanThink { 0%, 100% { transform: translateY(0) rotate(-4deg); } 50% { transform: translateY(-6px) rotate(6deg); } }
-    @keyframes gatherLeftArm { 0%, 100% { transform: rotate(-70deg); } 50% { transform: rotate(-22deg); } }
-    @keyframes gatherRightArm { 0%, 100% { transform: rotate(70deg); } 50% { transform: rotate(22deg); } }
-    @keyframes humanThrow { 0%, 100% { transform: translate(calc(-50% + var(--human-x) - 4px), var(--human-y)) rotate(calc(var(--torso-rot) - 18deg)); } 55% { transform: translate(calc(-50% + var(--human-x) + 9px), calc(var(--human-y) - 5px)) rotate(calc(var(--torso-rot) + 24deg)); } }
-    @keyframes humanCatch { 0%, 100% { transform: rotate(72deg); } 50% { transform: rotate(28deg); } }
-    @keyframes humanBreak { 0%, 100% { transform: translate(calc(-50% + var(--human-x)), var(--human-y)) rotate(var(--torso-rot)); } 20% { transform: translate(calc(-50% + var(--human-x)), var(--human-y)) rotate(calc(var(--torso-rot) - 16deg)); } 45% { transform: translate(calc(-50% + var(--human-x)), var(--human-y)) rotate(calc(var(--torso-rot) + 18deg)); } }
-    @keyframes humanFix { 0%, 100% { transform: rotate(62deg); } 35% { transform: rotate(22deg); } }
-    @keyframes humanBow { 0%, 100% { transform: translate(calc(-50% + var(--human-x)), var(--human-y)) rotate(var(--torso-rot)); } 50% { transform: translate(calc(-50% + var(--human-x)), calc(var(--human-y) + 3px)) rotate(calc(var(--torso-rot) + 24deg)); } }
-    @keyframes sparkleTrail { 0%, 100% { transform: scale(0.9) rotate(0); opacity: 0.5; } 50% { transform: scale(1.35) rotate(12deg); opacity: 1; } }
-    @keyframes humanDance { 0%, 100% { transform: translate(calc(-50% + var(--human-x) - 6px), var(--human-y)) rotate(calc(var(--torso-rot) - 14deg)); } 50% { transform: translate(calc(-50% + var(--human-x) + 6px), calc(var(--human-y) - 5px)) rotate(calc(var(--torso-rot) + 14deg)); } }
-    @keyframes cryShake { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-3px); } 75% { transform: translateX(3px); } }
-    @keyframes laughBounce { 0%, 100% { transform: translateY(0) scale(1); } 50% { transform: translateY(-5px) scale(1.12); } }
-    @keyframes helpWave { 0%, 100% { transform: rotate(12deg); } 50% { transform: rotate(86deg); } }
-    @keyframes inviteWave { 0%, 100% { transform: rotate(70deg); } 50% { transform: rotate(28deg); } }
-    @keyframes fishCast { 0%, 100% { transform: translate(calc(-50% + var(--human-x) - 5px), var(--human-y)) rotate(calc(var(--torso-rot) - 20deg)); } 50% { transform: translate(calc(-50% + var(--human-x) + 6px), calc(var(--human-y) - 4px)) rotate(calc(var(--torso-rot) + 24deg)); } }
-    @keyframes cookFlip { 0%, 100% { transform: translate(calc(-50% + var(--human-x)), calc(var(--human-y) + 2px)) rotate(calc(var(--torso-rot) - 8deg)); } 50% { transform: translate(calc(-50% + var(--human-x)), calc(var(--human-y) - 8px)) rotate(calc(var(--torso-rot) + 14deg)); } }
-    @keyframes bloomTrail { 0%, 100% { transform: scale(0.72); opacity: 0.45; } 50% { transform: scale(1.45); opacity: 1; } }
+    .motion-caption em {
+      display: block;
+      margin-top: 2px;
+      color: var(--accent-2);
+      font-style: normal;
+      font-weight: 750;
+    }
+
+    .motion-scene.walk,
+    .motion-scene.go { --left-leg: 46deg; --right-leg: -48deg; --left-arm: 42deg; --right-arm: -42deg; --kid-tilt: -4deg; }
+    .motion-scene.return { --left-leg: -44deg; --right-leg: 40deg; --left-arm: -54deg; --right-arm: 42deg; --kid-tilt: 10deg; }
+    .motion-scene.run { --left-leg: 68deg; --right-leg: -70deg; --left-arm: 58deg; --right-arm: -64deg; --kid-tilt: -12deg; }
+    .motion-scene.open { --left-arm: -102deg; --right-arm: 102deg; --left-leg: 20deg; --right-leg: -20deg; }
+    .motion-scene.close { --left-arm: -8deg; --right-arm: 8deg; --left-leg: 12deg; --right-leg: -12deg; }
+    .motion-scene.lift { --left-arm: -132deg; --right-arm: 132deg; --kid-y: -4px; }
+    .motion-scene.drop { --left-arm: -10deg; --right-arm: 22deg; --kid-tilt: 15deg; --kid-y: 4px; }
+    .motion-scene.speak { --left-arm: -24deg; --right-arm: 82deg; }
+    .motion-scene.listen { --left-arm: -18deg; --right-arm: -96deg; --face-tilt: 16deg; }
+    .motion-scene.eat { --left-arm: -24deg; --right-arm: -78deg; --prop-x: -10px; --prop-y: -14px; }
+    .motion-scene.drink { --left-arm: -20deg; --right-arm: -96deg; --kid-tilt: -12deg; --prop-x: -9px; --prop-y: -12px; --prop-rot: -18deg; }
+    .motion-scene.sleep { --left-arm: -68deg; --right-arm: 68deg; --left-leg: 48deg; --right-leg: 10deg; --kid-tilt: -25deg; --kid-y: 5px; }
+    .motion-scene.search { --left-arm: -86deg; --right-arm: 92deg; --kid-tilt: -10deg; --prop-x: -8px; --prop-y: -6px; }
+    .motion-scene.write { --left-arm: -36deg; --right-arm: 70deg; --kid-tilt: 7deg; }
+    .motion-scene.cut { --left-arm: -40deg; --right-arm: 98deg; }
+    .motion-scene.clean { --left-arm: -38deg; --right-arm: 52deg; --kid-tilt: 7deg; }
+    .motion-scene.ride { --left-leg: 82deg; --right-leg: -82deg; --left-arm: -42deg; --right-arm: 42deg; --kid-y: -2px; }
+    .motion-scene.fly { --left-arm: -120deg; --right-arm: 120deg; --left-leg: 42deg; --right-leg: -42deg; --kid-y: -12px; --kid-tilt: -14deg; }
+    .motion-scene.turn { --left-arm: -74deg; --right-arm: 32deg; --kid-tilt: 18deg; }
+    .motion-scene.hold { --left-arm: -24deg; --right-arm: 24deg; }
+    .motion-scene.gather { --left-arm: -76deg; --right-arm: 76deg; }
+    .motion-scene.throw { --left-arm: -22deg; --right-arm: -128deg; --kid-tilt: -18deg; }
+    .motion-scene.catch { --left-arm: -82deg; --right-arm: 82deg; }
+    .motion-scene.pay { --left-arm: -20deg; --right-arm: 60deg; --kid-tilt: 20deg; }
+    .motion-scene.dance { --left-arm: -118deg; --right-arm: 96deg; --left-leg: 54deg; --right-leg: -38deg; --kid-tilt: -10deg; }
+    .motion-scene.cry { --left-arm: -18deg; --right-arm: -18deg; --kid-tilt: 7deg; }
+    .motion-scene.laugh { --left-arm: -112deg; --right-arm: 112deg; --kid-y: -4px; }
+    .motion-scene.invite { --left-arm: -28deg; --right-arm: 96deg; }
+    .motion-scene.help { --left-arm: -64deg; --right-arm: 96deg; }
+    .motion-scene.fish { --left-arm: -34deg; --right-arm: -116deg; --kid-tilt: -12deg; }
+    .motion-scene.cook { --left-arm: -46deg; --right-arm: 76deg; --kid-tilt: 8deg; }
+    .motion-scene.bloom { --left-arm: -94deg; --right-arm: 94deg; --kid-y: -3px; }
+
+    .motion-scene.eat .motion-stage,
+    .motion-scene.drink .motion-stage,
+    .motion-scene.cook .motion-stage { --scene-bg: #fff7ed; --scene-ground: #fed7aa; }
+    .motion-scene.sleep .motion-stage { --scene-bg: #dbeafe; --scene-ground: #bfdbfe; }
+    .motion-scene.go .motion-stage,
+    .motion-scene.walk .motion-stage,
+    .motion-scene.run .motion-stage,
+    .motion-scene.return .motion-stage,
+    .motion-scene.ride .motion-stage { --scene-bg: #e0f2fe; --scene-ground: #bbf7d0; }
+    .motion-scene.rain .motion-stage { --scene-bg: #c7d2fe; --scene-ground: #bfdbfe; }
+    .motion-scene.write .motion-stage,
+    .motion-scene.think .motion-stage,
+    .motion-scene.listen .motion-stage,
+    .motion-scene.speak .motion-stage { --scene-bg: #fef9c3; --scene-ground: #fde68a; }
+    .motion-scene.search .motion-stage { --scene-bg: #ecfeff; --scene-ground: #a7f3d0; }
+    .motion-scene.break .motion-stage,
+    .motion-scene.cry .motion-stage { --scene-bg: #fee2e2; --scene-ground: #fecaca; }
+    .motion-scene.dance .motion-stage,
+    .motion-scene.laugh .motion-stage,
+    .motion-scene.shine .motion-stage,
+    .motion-scene.bloom .motion-stage { --scene-bg: #fce7f3; --scene-ground: #bbf7d0; }
+    .motion-scene.open .motion-stage,
+    .motion-scene.close .motion-stage { --scene-bg: #fef3c7; --scene-ground: #fde68a; }
+    .motion-scene.pay .motion-stage { --scene-bg: #ecfccb; --scene-ground: #bbf7d0; }
+
+    .motion-scene.walk .kid,
+    .motion-scene.go .kid,
+    .motion-scene.run .kid,
+    .motion-scene.dance .kid { animation-name: kidStep; }
+    .motion-scene.sleep .kid { animation-name: kidSleep; }
+    .motion-scene.fly .kid { animation-name: kidFly; }
+    .motion-scene.clean .kid { animation-name: kidScrub; }
+    .motion-scene.throw .kid { animation-name: kidThrow; }
+    .motion-scene.cook .kid { animation-name: kidCook; }
+    .motion-scene.speak .kid-mouth { animation: mouthTalk 0.48s ease-in-out infinite; }
+    .motion-scene.eat .kid-mouth { animation: mouthChew 0.55s ease-in-out infinite; }
+    .motion-scene.dance .kid-shorts { animation: shortsWiggle 0.62s ease-in-out infinite; }
+    .motion-scene.run .scene-sfx,
+    .motion-scene.throw .scene-sfx,
+    .motion-scene.break .scene-sfx,
+    .motion-scene.laugh .scene-sfx { animation-name: sfxBounce; }
+    .motion-scene.cry .kid-face { animation-name: faceCry; }
+    .motion-scene.laugh .kid-face { animation-name: faceLaugh; }
+    .motion-scene.think .kid-hair { animation: hairThink 1.4s ease-in-out infinite; }
+    .motion-scene.open .kanji-stroke.s1,
+    .motion-scene.open .kanji-stroke.s3 { animation: gateOpen 1.35s ease-in-out infinite; }
+    .motion-scene.close .kanji-stroke.s1,
+    .motion-scene.close .kanji-stroke.s3 { animation: gateClose 1.35s ease-in-out infinite; }
+    .motion-scene.rain .motion-lines::before,
+    .motion-scene.rain .motion-lines::after { animation-name: rainLines; }
+    .motion-scene.shine .meaning-prop,
+    .motion-scene.bloom .meaning-prop { animation-name: propSpark; }
+
+    @keyframes kidBreathe { 0%, 100% { transform: translate(calc(-50% + var(--kid-x)), var(--kid-y)) rotate(var(--kid-tilt)); } 50% { transform: translate(calc(-50% + var(--kid-x)), calc(var(--kid-y) - 3px)) rotate(calc(var(--kid-tilt) + 2deg)); } }
+    @keyframes kidStep { 0%, 100% { transform: translate(calc(-50% + var(--kid-x) - 6px), var(--kid-y)) rotate(calc(var(--kid-tilt) - 4deg)); } 50% { transform: translate(calc(-50% + var(--kid-x) + 6px), calc(var(--kid-y) - 4px)) rotate(calc(var(--kid-tilt) + 5deg)); } }
+    @keyframes kidSleep { 0%, 100% { transform: translate(calc(-50% + var(--kid-x)), var(--kid-y)) rotate(var(--kid-tilt)); } 50% { transform: translate(calc(-50% + var(--kid-x)), calc(var(--kid-y) - 2px)) rotate(calc(var(--kid-tilt) + 8deg)); } }
+    @keyframes kidFly { 0%, 100% { transform: translate(calc(-50% + var(--kid-x) - 8px), calc(var(--kid-y) + 3px)) rotate(calc(var(--kid-tilt) - 6deg)); } 50% { transform: translate(calc(-50% + var(--kid-x) + 12px), calc(var(--kid-y) - 10px)) rotate(calc(var(--kid-tilt) + 8deg)); } }
+    @keyframes kidScrub { 0%, 100% { transform: translate(calc(-50% + var(--kid-x) - 5px), var(--kid-y)) rotate(calc(var(--kid-tilt) - 3deg)); } 50% { transform: translate(calc(-50% + var(--kid-x) + 5px), var(--kid-y)) rotate(calc(var(--kid-tilt) + 3deg)); } }
+    @keyframes kidThrow { 0%, 100% { transform: translate(calc(-50% + var(--kid-x) - 4px), var(--kid-y)) rotate(calc(var(--kid-tilt) - 8deg)); } 55% { transform: translate(calc(-50% + var(--kid-x) + 8px), calc(var(--kid-y) - 7px)) rotate(calc(var(--kid-tilt) + 18deg)); } }
+    @keyframes kidCook { 0%, 100% { transform: translate(calc(-50% + var(--kid-x)), var(--kid-y)) rotate(calc(var(--kid-tilt) - 4deg)); } 50% { transform: translate(calc(-50% + var(--kid-x)), calc(var(--kid-y) - 7px)) rotate(calc(var(--kid-tilt) + 7deg)); } }
+    @keyframes kidShadow { 0%, 100% { transform: scaleX(1); opacity: 0.58; } 50% { transform: scaleX(0.72); opacity: 0.32; } }
+    @keyframes faceWiggle { 0%, 100% { transform: translateX(-50%) rotate(var(--face-tilt)); } 50% { transform: translateX(-50%) rotate(calc(var(--face-tilt) + 5deg)); } }
+    @keyframes faceCry { 0%, 100% { transform: translateX(calc(-50% - 3px)) rotate(var(--face-tilt)); } 50% { transform: translateX(calc(-50% + 3px)) rotate(var(--face-tilt)); } }
+    @keyframes faceLaugh { 0%, 100% { transform: translateX(-50%) translateY(0) scale(1) rotate(var(--face-tilt)); } 50% { transform: translateX(-50%) translateY(-5px) scale(1.08) rotate(var(--face-tilt)); } }
+    @keyframes mouthTalk { 0%, 100% { height: 4px; border-bottom-width: 2px; } 50% { height: 9px; border-bottom-width: 3px; } }
+    @keyframes mouthChew { 0%, 100% { transform: translateX(-50%) scaleX(1.15); } 50% { transform: translateX(-50%) scaleX(0.62); } }
+    @keyframes hairThink { 0%, 100% { transform: translateX(-50%) rotate(-10deg); } 50% { transform: translateX(-50%) translateY(-2px) rotate(12deg); } }
+    @keyframes propAct { 0%, 100% { transform: translate(var(--prop-x), var(--prop-y)) rotate(var(--prop-rot)) scale(1); } 50% { transform: translate(calc(var(--prop-x) - 3px), calc(var(--prop-y) - 6px)) rotate(calc(var(--prop-rot) + 14deg)) scale(1.1); } }
+    @keyframes propSpark { 0%, 100% { opacity: 0.62; transform: translate(var(--prop-x), var(--prop-y)) scale(0.85) rotate(var(--prop-rot)); } 50% { opacity: 1; transform: translate(var(--prop-x), calc(var(--prop-y) - 5px)) scale(1.35) rotate(calc(var(--prop-rot) + 18deg)); } }
+    @keyframes motionArc { 0%, 100% { transform: rotate(-12deg) scale(0.92); opacity: 0.25; } 50% { transform: rotate(8deg) scale(1.08); opacity: 0.78; } }
+    @keyframes rainLines { 0% { transform: translateY(-14px) rotate(18deg); opacity: 0.1; } 100% { transform: translateY(20px) rotate(18deg); opacity: 0.8; } }
+    @keyframes gateOpen { 0%, 100% { transform: scaleX(0.72); } 50% { transform: scaleX(1.22); } }
+    @keyframes gateClose { 0%, 100% { transform: scaleX(1.18); } 50% { transform: scaleX(0.62); } }
+    @keyframes sfxPop { 0%, 100% { transform: rotate(-7deg) scale(1); opacity: 0.72; } 50% { transform: rotate(5deg) scale(1.08); opacity: 1; } }
+    @keyframes sfxBounce { 0%, 100% { transform: translateY(0) rotate(-7deg) scale(1); } 50% { transform: translateY(-6px) rotate(7deg) scale(1.16); } }
+    @keyframes shortsWiggle { 0%, 100% { transform: translateX(-50%) rotate(-6deg); } 50% { transform: translateX(-50%) rotate(8deg); } }
 
     @media (prefers-reduced-motion: reduce) {
-      .human-pose,
-      .human-head,
-      .human-arm,
-      .human-leg,
-      .action-prop,
-      .motion-trail,
-      .motion-shadow {
+      .kid,
+      .kid-face,
+      .kid-mouth,
+      .kid-hair,
+      .kid-shorts,
+      .meaning-prop,
+      .scene-sfx,
+      .motion-lines::before,
+      .motion-lines::after,
+      .kid-shadow,
+      .kanji-stroke {
         animation: none !important;
       }
     }
@@ -596,10 +802,9 @@
   </style>
 </head>
 <body>
-  <canvas id="threeLayer" aria-hidden="true"></canvas>
   <header>
     <h1>JLPT Verb Vocabulary</h1>
-    <p class="subtitle">Expanded N5 and N4 verb study-list flashcards with 3D animated human actions shaped by furigana, Chinese translations, short example sentences, and practical phrase chunks for fast review.</p>
+    <p class="subtitle">Expanded N5 and N4 verb study-list flashcards with cheeky kid action scenes, Chinese translations, short example sentences, and practical phrase chunks for fast review.</p>
   </header>
 
   <main>
@@ -618,7 +823,7 @@
 
     <section class="stats" aria-live="polite">
       <span class="stat" id="count">0 verbs</span>
-      <span class="stat">Expanded study-list deck</span><span class="stat">3D furigana humans</span><span class="stat">Click Hide for flashcard practice</span>
+      <span class="stat">Expanded study-list deck</span><span class="stat">cheeky kid action scenes</span><span class="stat">Click Hide for flashcard practice</span>
     </section>
 
     <section id="grid" class="grid" aria-label="Verb cards"></section>
@@ -638,18 +843,36 @@
       <div class="meta"></div>
       <div class="motion-scene">
         <div class="motion-stage" aria-hidden="true">
-          <span class="kana-outline"></span>
-          <span class="motion-shadow"></span>
-          <span class="action-prop"></span>
-          <span class="human-pose">
-            <span class="human-head"></span>
-            <span class="human-torso"></span>
-            <span class="human-arm left"></span>
-            <span class="human-arm right"></span>
-            <span class="human-leg left"></span>
-            <span class="human-leg right"></span>
+          <span class="scene-sfx"></span>
+          <span class="pose-kanji"></span>
+          <span class="pose-meaning"></span>
+          <span class="kanji-stroke s1"></span>
+          <span class="kanji-stroke s2"></span>
+          <span class="kanji-stroke s3"></span>
+          <span class="kanji-stroke s4"></span>
+          <span class="kid-shadow"></span>
+          <span class="meaning-prop"></span>
+          <span class="kid">
+            <span class="kid-arm left"></span>
+            <span class="kid-arm right"></span>
+            <span class="kid-leg left"></span>
+            <span class="kid-leg right"></span>
+            <span class="kid-shoe left"></span>
+            <span class="kid-shoe right"></span>
+            <span class="kid-shirt"></span>
+            <span class="kid-shorts"></span>
+            <span class="kid-face">
+              <span class="kid-hair"></span>
+              <span class="kid-brow left"></span>
+              <span class="kid-brow right"></span>
+              <span class="kid-eye left"></span>
+              <span class="kid-eye right"></span>
+              <span class="kid-cheek left"></span>
+              <span class="kid-cheek right"></span>
+              <span class="kid-mouth"></span>
+            </span>
           </span>
-          <span class="motion-trail"></span>
+          <span class="motion-lines"></span>
         </div>
         <p class="motion-caption"></p>
       </div>
@@ -2996,21 +3219,10 @@
     const shuffleButton = document.querySelector("#shuffle");
     const toggleAnswersButton = document.querySelector("#toggleAnswers");
     const template = document.querySelector("#cardTemplate");
-    const threeCanvas = document.querySelector("#threeLayer");
-
-    let Three = null;
-    let threeRenderer = null;
-    let threeItems = [];
-    let threeLoopStarted = false;
-    let lastViewportWidth = 0;
-    let lastViewportHeight = 0;
-    const textureCache = new Map();
 
     let activeLevel = "all";
     let answersHidden = false;
     let visibleVerbs = [...verbs];
-
-    loadThree();
 
     function rubyFor(kanji, kana) {
       if (kanji === kana || !/[一-龯]/.test(kanji)) return kanji;
@@ -3021,495 +3233,121 @@
       return text.toLowerCase().replace(/\s+/g, "");
     }
 
-
-
     const motionRules = [
-      { type: "sleep", label: "sleepy sway", words: ["寝", "眠"] },
-      { type: "eat", label: "eating nod", words: ["食べ"] },
-      { type: "drink", label: "drink tilt", words: ["飲", "浴び"] },
-      { type: "speak", label: "speaking mouth", words: ["言", "話", "申", "申し", "説明", "紹介", "知らせ", "伝"] },
-      { type: "listen", label: "listening tilt", words: ["聞", "尋ね", "相談"] },
-      { type: "write", label: "writing stroke", words: ["書", "写", "コピー", "チェック"] },
-      { type: "cut", label: "cutting snap", words: ["切", "割", "折"] },
-      { type: "clean", label: "scrub motion", words: ["洗", "磨", "塗", "片付", "直", "治", "汚"] },
-      { type: "open", label: "opening arms", words: ["開", "出", "始め", "始ま"] },
-      { type: "close", label: "closing arms", words: ["閉", "仕舞", "止め", "止ま", "止む", "終"] },
-      { type: "lift", label: "lifting up", words: ["上", "立", "登", "増", "育", "建", "植", "祈"] },
-      { type: "drop", label: "falling down", words: ["下", "降", "落", "倒", "痩", "死", "亡"] },
-      { type: "go", label: "stepping forward", words: ["行", "歩", "出かけ", "進", "渡", "来", "参", "寄"] },
-      { type: "return", label: "turning back", words: ["帰", "返", "戻"] },
-      { type: "run", label: "quick steps", words: ["急", "逃", "間に合"] },
-      { type: "ride", label: "ride bounce", words: ["乗", "泊", "引っ越", "移"] },
-      { type: "fly", label: "flying arc", words: ["飛"] },
-      { type: "rain", label: "falling drops", words: ["降る", "曇", "冷", "乾", "沸"] },
-      { type: "turn", label: "turning body", words: ["曲", "変", "取り替", "違", "間違"] },
-      { type: "wait", label: "patient pause", words: ["待", "要", "足り", "慣"] },
-      { type: "hold", label: "holding grip", words: ["持", "取", "撮", "入", "置", "押", "引", "使", "着", "脱", "選", "用意", "準備"] },
-      { type: "think", label: "thinking bob", words: ["考", "思い出", "覚", "忘", "知", "分か", "決"] },
-      { type: "search", label: "search scan", words: ["探", "調べ", "見", "見つ"] },
-      { type: "gather", label: "gathering in", words: ["集", "並", "会", "合"] },
-      { type: "throw", label: "throwing arc", words: ["投", "打", "捨", "出す"] },
-      { type: "catch", label: "catch and hold", words: ["捕", "受", "拾", "借", "貸", "渡", "届け", "くれ"] },
-      { type: "break", label: "jolt break", words: ["壊", "失敗", "驚", "騒", "叱", "困", "盗"] },
-      { type: "fix", label: "repair tap", words: ["助", "手伝", "役に立", "頑張"] },
-      { type: "pay", label: "paying bow", words: ["払", "買", "売", "注文", "頼"] },
-      { type: "shine", label: "spark cue", words: ["光", "安心", "喜"] },
-      { type: "dance", label: "dance sway", words: ["踊", "遊", "楽し", "歌", "弾", "泳", "釣"] },
-      { type: "cry", label: "cry shake", words: ["泣", "謝", "負"] },
-      { type: "laugh", label: "laugh bounce", words: ["笑", "褒"] },
-      { type: "invite", label: "inviting wave", words: ["誘", "招待", "案内", "迎", "呼", "訪"] },
-      { type: "cook", label: "cooking flip", words: ["作", "焼"] },
-      { type: "bloom", label: "bloom pulse", words: ["咲", "生ま", "生き", "住", "生活"] }
+      { type: "sleep", label: "sleep / 寝", kanji: "寝", prop: "z", words: ["寝", "眠"] },
+      { type: "eat", label: "eat / 食", kanji: "食", prop: "🍙", words: ["食べ"] },
+      { type: "drink", label: "drink / 飲", kanji: "飲", prop: "杯", words: ["飲", "浴び"] },
+      { type: "speak", label: "speak / 言", kanji: "言", prop: "〰", words: ["言", "話", "申", "申し", "説明", "紹介", "知らせ", "伝"] },
+      { type: "listen", label: "listen / 聞", kanji: "聞", prop: "耳", words: ["聞", "尋ね", "相談"] },
+      { type: "write", label: "write / 書", kanji: "書", prop: "筆", words: ["書", "写", "コピー", "チェック"] },
+      { type: "cut", label: "cut / 切", kanji: "切", prop: "✂", words: ["切", "割", "折"] },
+      { type: "clean", label: "clean / 洗", kanji: "洗", prop: "◇", words: ["洗", "磨", "塗", "片付", "直", "治", "汚"] },
+      { type: "open", label: "open / 開", kanji: "開", prop: "扉", words: ["開", "出", "始め", "始ま"] },
+      { type: "close", label: "close / 閉", kanji: "閉", prop: "門", words: ["閉", "仕舞", "止め", "止ま", "止む", "終"] },
+      { type: "lift", label: "up / 上", kanji: "上", prop: "↑", words: ["上", "立", "登", "増", "育", "建", "植", "祈"] },
+      { type: "drop", label: "down / 下", kanji: "下", prop: "↓", words: ["下", "降", "落", "倒", "痩", "死", "亡"] },
+      { type: "go", label: "go / 行", kanji: "行", prop: "→", words: ["行", "歩", "出かけ", "進", "渡", "来", "参", "寄"] },
+      { type: "return", label: "return / 帰", kanji: "帰", prop: "↩", words: ["帰", "返", "戻"] },
+      { type: "run", label: "hurry / 急", kanji: "急", prop: "!", words: ["急", "逃", "間に合"] },
+      { type: "ride", label: "ride / 乗", kanji: "乗", prop: "車", words: ["乗", "泊", "引っ越", "移"] },
+      { type: "fly", label: "fly / 飛", kanji: "飛", prop: "羽", words: ["飛"] },
+      { type: "rain", label: "fall / 降", kanji: "降", prop: "雨", words: ["降る", "曇", "冷", "乾", "沸"] },
+      { type: "turn", label: "turn / 曲", kanji: "曲", prop: "↷", words: ["曲", "変", "取り替", "違", "間違"] },
+      { type: "wait", label: "wait / 待", kanji: "待", prop: "…", words: ["待", "要", "足り", "慣"] },
+      { type: "hold", label: "hold / 持", kanji: "持", prop: "●", words: ["持", "取", "撮", "入", "置", "押", "引", "使", "着", "脱", "選", "用意", "準備"] },
+      { type: "think", label: "think / 考", kanji: "考", prop: "?", words: ["考", "思い出", "覚", "忘", "知", "分か", "決"] },
+      { type: "search", label: "look / 見", kanji: "見", prop: "◎", words: ["探", "調べ", "見", "見つ"] },
+      { type: "gather", label: "gather / 集", kanji: "集", prop: "＋", words: ["集", "並", "会", "合"] },
+      { type: "throw", label: "throw / 投", kanji: "投", prop: "●", words: ["投", "打", "捨", "出す"] },
+      { type: "catch", label: "catch / 捕", kanji: "捕", prop: "●", words: ["捕", "受", "拾", "借", "貸", "渡", "届け", "くれ"] },
+      { type: "break", label: "break / 壊", kanji: "壊", prop: "✕", words: ["壊", "失敗", "驚", "騒", "叱", "困", "盗"] },
+      { type: "help", label: "help / 助", kanji: "助", prop: "+", words: ["助", "手伝", "役に立", "頑張"] },
+      { type: "pay", label: "pay / 払", kanji: "払", prop: "¥", words: ["払", "買", "売", "注文", "頼"] },
+      { type: "shine", label: "shine / 光", kanji: "光", prop: "✦", words: ["光", "安心", "喜"] },
+      { type: "dance", label: "dance / 踊", kanji: "踊", prop: "♪", words: ["踊", "遊", "楽し", "歌", "弾", "泳", "釣"] },
+      { type: "cry", label: "cry / 泣", kanji: "泣", prop: "涙", words: ["泣", "謝", "負"] },
+      { type: "laugh", label: "laugh / 笑", kanji: "笑", prop: "♪", words: ["笑", "褒"] },
+      { type: "invite", label: "invite / 招", kanji: "招", prop: "↙", words: ["誘", "招待", "案内", "迎", "呼", "訪"] },
+      { type: "cook", label: "cook / 焼", kanji: "焼", prop: "火", words: ["作", "焼"] },
+      { type: "bloom", label: "bloom / 咲", kanji: "咲", prop: "✿", words: ["咲", "生ま", "生き", "住", "生活"] }
     ];
 
-    function kanaParts(kana) {
-      const chars = Array.from(kana || "する");
-      const groups = [];
-      chars.forEach((char) => {
-        if ("ゃゅょぁぃぅぇぉャュョァィゥェォー".includes(char) && groups.length) {
-          groups[groups.length - 1] += char;
-        } else {
-          groups.push(char);
-        }
-      });
-      return groups.length ? groups : [kana || "す"];
-    }
+    const sceneMeta = {
+      walk: { title: "neighborhood walk", sfx: "step", scene: "The cheeky kid strolls through the neighborhood." },
+      go: { title: "running to class", sfx: "go!", scene: "The cheeky kid heads off with big determined steps." },
+      return: { title: "oops, turn back", sfx: "back", scene: "The kid spins around and rushes back." },
+      run: { title: "late-for-school dash", sfx: "dash", scene: "The kid leans forward and bolts like the bell just rang." },
+      open: { title: "door drama", sfx: "open", scene: "The kid throws both arms wide like sliding a door open." },
+      close: { title: "quietly closing", sfx: "shh", scene: "The kid pulls everything shut with tiny careful arms." },
+      lift: { title: "show-off lift", sfx: "up!", scene: "The kid raises the action overhead with a proud little pose." },
+      drop: { title: "oops, it fell", sfx: "plop", scene: "The kid crouches as the action drops down." },
+      speak: { title: "loud announcement", sfx: "bla", scene: "The kid opens his mouth wide and talks with full confidence." },
+      listen: { title: "secret listening", sfx: "eh?", scene: "The kid tilts his head and cups the moment like gossip." },
+      eat: { title: "snack attack", sfx: "nom", scene: "The kid leans into the snack with serious appetite." },
+      drink: { title: "juice break", sfx: "sip", scene: "The kid tips back for a dramatic drink." },
+      sleep: { title: "nap time flop", sfx: "zzz", scene: "The kid melts sideways into sleepy nap mode." },
+      search: { title: "treasure hunt", sfx: "look", scene: "The kid scans the ground like he lost a precious toy." },
+      write: { title: "homework panic", sfx: "scrib", scene: "The kid scribbles with one hand and hopes it counts." },
+      cut: { title: "craft scissors", sfx: "snip", scene: "The kid snaps the action like cutting paper." },
+      clean: { title: "cleanup duty", sfx: "scrub", scene: "The kid scrubs side to side after making a mess." },
+      ride: { title: "wobbly ride", sfx: "vroom", scene: "The kid bounces along like riding something too fast." },
+      fly: { title: "airplane imagination", sfx: "whoo", scene: "The kid spreads both arms and flies across the room." },
+      rain: { title: "rainy day", sfx: "drip", scene: "The kid reacts under falling weather lines." },
+      turn: { title: "wrong-way turn", sfx: "swish", scene: "The kid twists his whole body to change direction." },
+      wait: { title: "waiting face", sfx: "...", scene: "The kid freezes in a tiny impatient pause." },
+      hold: { title: "grabby hands", sfx: "grab", scene: "The kid clutches the thing like it is his favorite." },
+      think: { title: "big-brain moment", sfx: "hmm", scene: "The kid's hair bobs while he thinks hard." },
+      gather: { title: "friend meetup", sfx: "hey!", scene: "The kid opens his arms as everyone gathers around." },
+      throw: { title: "big throw", sfx: "yeet", scene: "The kid winds up and throws the action across the scene." },
+      catch: { title: "catch it!", sfx: "got!", scene: "The kid reaches out with both hands to catch or receive." },
+      break: { title: "uh-oh trouble", sfx: "crack", scene: "The kid jolts like something just broke." },
+      help: { title: "helpful hero", sfx: "ta-da", scene: "The kid waves in to help, very proud of himself." },
+      pay: { title: "tiny shopkeeper", sfx: "yen", scene: "The kid bows and pays like a very serious customer." },
+      shine: { title: "happy sparkle", sfx: "spark", scene: "The kid glows with happy relief." },
+      dance: { title: "cheeky dance", sfx: "la!", scene: "The kid wiggles in a silly victory dance." },
+      cry: { title: "teary face", sfx: "sob", scene: "The kid shakes with big dramatic tears." },
+      laugh: { title: "belly laugh", sfx: "haha", scene: "The kid bounces with a wide cheeky laugh." },
+      invite: { title: "come here!", sfx: "come", scene: "The kid waves someone into the scene." },
+      fish: { title: "fishing cast", sfx: "cast", scene: "The kid leans back and casts an imaginary fishing line." },
+      cook: { title: "kitchen chaos", sfx: "flip", scene: "The kid flips food like a bold little chef." },
+      bloom: { title: "garden scene", sfx: "pop", scene: "The kid celebrates life and flowers popping up." }
+    };
 
     function motionFor(verb) {
       const corpus = `${verb.kanji}${verb.kana}${verb.zh}${verb.example}${verb.phrases}`;
       return motionRules.find((rule) => rule.words.some((word) => corpus.includes(word))) || {
-        type: "walk",
-        label: "basic action"
+        type: "go",
+        label: "action / 動",
+        kanji: "動",
+        prop: "→"
       };
     }
 
-    const propMarks = {
-      eat: "•", drink: "◜", write: "╱", cut: "✂", clean: "◇", ride: "◡", fly: "⌁", rain: "⋮",
-      search: "○", throw: "•", catch: "●", fix: "✚", pay: "¥", shine: "✦", fish: "⌒", cook: "◠", bloom: "✿",
-      speak: "〰", listen: "⌕", think: "?", cry: "滴", laugh: "♪", invite: "↙", help: "+"
-    };
-
-    function kanaSignature(kana) {
-      return Array.from(kana || "する").reduce((sum, char, index) => sum + char.codePointAt(0) * (index + 3), 0);
-    }
-
-    function poseFromKana(kana, motionType) {
-      const parts = kanaParts(kana);
-      const sig = kanaSignature(kana);
-      const angle = (offset, spread = 70) => Math.round(((sig >> offset) % spread) - spread / 2);
-      const mirror = parts.length % 2 === 0 ? 1 : -1;
-      const pose = {
-        torso: angle(1, 34),
-        leftArm: -48 + angle(3, 46),
-        rightArm: 48 + angle(5, 46),
-        leftLeg: 22 + angle(7, 34),
-        rightLeg: -22 + angle(9, 34),
-        x: ((sig % 9) - 4) * 1.4,
-        y: -((parts.length % 4) * 1.5),
-        tilt: angle(11, 22)
+    function poseFromKana(kana) {
+      const chars = Array.from(kana || "する");
+      const sig = chars.reduce((sum, char, index) => sum + char.codePointAt(0) * (index + 5), 0);
+      return {
+        x: ((sig % 7) - 3) * 1.2,
+        y: -((chars.length % 3) * 1.2),
+        face: ((sig >> 3) % 17) - 8
       };
-
-      const actionPoses = {
-        open: { leftArm: -92, rightArm: 92 },
-        close: { leftArm: -16, rightArm: 16 },
-        lift: { leftArm: -132, rightArm: 132, torso: -4 },
-        drop: { leftArm: -20, rightArm: 32, torso: 12 },
-        speak: { leftArm: -30, rightArm: 78 },
-        listen: { leftArm: -18, rightArm: 108, torso: -8 },
-        eat: { leftArm: -18, rightArm: -72, torso: 7 },
-        drink: { leftArm: -12, rightArm: -88, torso: -12 },
-        sleep: { leftArm: -68, rightArm: 68, leftLeg: 46, rightLeg: 18, torso: -26 },
-        search: { leftArm: -88, rightArm: 88, torso: -10 },
-        write: { leftArm: -36, rightArm: 62, torso: 8 },
-        cut: { leftArm: -44, rightArm: 92 },
-        ride: { leftArm: -42, rightArm: 42, leftLeg: 78, rightLeg: -78, torso: -4 },
-        fly: { leftArm: -112, rightArm: 112, leftLeg: 44, rightLeg: -44, torso: -12 },
-        turn: { leftArm: -72, rightArm: 34, torso: 18 },
-        hold: { leftArm: -28, rightArm: 28 },
-        gather: { leftArm: -74, rightArm: 74 },
-        throw: { leftArm: -20, rightArm: -126, torso: -16 },
-        catch: { leftArm: -82, rightArm: 82 },
-        pay: { leftArm: -28, rightArm: 58, torso: 18 },
-        dance: { leftArm: -118, rightArm: 96, leftLeg: 54, rightLeg: -38, torso: -10 * mirror },
-        cry: { leftArm: -18, rightArm: -18, torso: 8 },
-        laugh: { leftArm: -110, rightArm: 110, torso: -4 },
-        invite: { leftArm: -28, rightArm: 92 },
-        help: { leftArm: -66, rightArm: 92 },
-        fish: { leftArm: -35, rightArm: -116, torso: -12 },
-        cook: { leftArm: -46, rightArm: 76, torso: 8 },
-        bloom: { leftArm: -94, rightArm: 94, torso: -2 }
-      };
-      return { ...pose, ...(actionPoses[motionType] || {}) };
-    }
-
-    function applyPose(stage, pose) {
-      stage.style.setProperty("--torso-rot", `${pose.torso}deg`);
-      stage.style.setProperty("--left-arm", `${pose.leftArm}deg`);
-      stage.style.setProperty("--right-arm", `${pose.rightArm}deg`);
-      stage.style.setProperty("--left-leg", `${pose.leftLeg}deg`);
-      stage.style.setProperty("--right-leg", `${pose.rightLeg}deg`);
-      stage.style.setProperty("--human-x", `${pose.x}px`);
-      stage.style.setProperty("--human-y", `${pose.y}px`);
-      stage.style.setProperty("--kana-tilt", `${pose.tilt}deg`);
     }
 
     function applyMotion(scene, verb) {
       const motion = motionFor(verb);
+      const meta = sceneMeta[motion.type] || sceneMeta.go;
+      const pose = poseFromKana(verb.kana);
+      const phrase = verb.phrases.split("/")[0].trim();
       const stage = scene.querySelector(".motion-stage");
-      scene.dataset.kana = verb.kana;
-      scene.dataset.motionType = motion.type;
-      scene.dataset.motionLabel = motion.label;
       scene.className = `motion-scene ${motion.type}`;
-      scene.querySelector(".kana-outline").textContent = verb.kana;
-      scene.querySelector(".motion-trail").textContent = verb.kana;
-      scene.querySelector(".action-prop").textContent = propMarks[motion.type] || "•";
-      applyPose(stage, poseFromKana(verb.kana, motion.type));
-      scene.querySelector(".motion-caption").innerHTML = `<strong>${motion.label}</strong>3D body reads: ${verb.kana}`;
-    }
-
-    function loadThree() {
-      import("https://cdn.jsdelivr.net/npm/three@0.165.0/build/three.module.js")
-        .then((module) => {
-          Three = module;
-          setupThreeRenderer();
-          mountThreeScenes();
-        })
-        .catch(() => {
-          document.body.classList.add("three-unavailable");
-        });
-    }
-
-    function setupThreeRenderer() {
-      if (!Three || threeRenderer) return;
-      threeRenderer = new Three.WebGLRenderer({
-        canvas: threeCanvas,
-        alpha: true,
-        antialias: true
-      });
-      threeRenderer.setClearColor(0x000000, 0);
-      threeRenderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.6));
-      threeRenderer.autoClear = false;
-      document.body.classList.add("three-ready");
-      if (!threeLoopStarted) {
-        threeLoopStarted = true;
-        threeRenderer.setAnimationLoop(renderThreeScenes);
-      }
-    }
-
-    function mountThreeScenes() {
-      if (!Three || !threeRenderer) return;
-      disposeThreeItems();
-      document.querySelectorAll(".motion-scene").forEach((scene, index) => {
-        const stage = scene.querySelector(".motion-stage");
-        if (!stage) return;
-        threeItems.push(createKanaHumanScene(stage, scene.dataset, index));
-      });
-    }
-
-    function disposeThreeItems() {
-      threeItems.forEach((item) => {
-        item.scene.traverse((object) => {
-          if (object.geometry) object.geometry.dispose();
-          if (object.material) {
-            const materials = Array.isArray(object.material) ? object.material : [object.material];
-            materials.forEach((material) => {
-              if (material.map && !textureCacheHasValue(material.map)) material.map.dispose();
-              material.dispose();
-            });
-          }
-        });
-      });
-      threeItems = [];
-    }
-
-    function textureCacheHasValue(texture) {
-      for (const cached of textureCache.values()) {
-        if (cached === texture) return true;
-      }
-      return false;
-    }
-
-    function makeRoundRect(ctx, x, y, width, height, radius) {
-      ctx.beginPath();
-      ctx.moveTo(x + radius, y);
-      ctx.lineTo(x + width - radius, y);
-      ctx.quadraticCurveTo(x + width, y, x + width, y + radius);
-      ctx.lineTo(x + width, y + height - radius);
-      ctx.quadraticCurveTo(x + width, y + height, x + width - radius, y + height);
-      ctx.lineTo(x + radius, y + height);
-      ctx.quadraticCurveTo(x, y + height, x, y + height - radius);
-      ctx.lineTo(x, y + radius);
-      ctx.quadraticCurveTo(x, y, x + radius, y);
-      ctx.closePath();
-    }
-
-    function kanaTexture(text, foreground = "#0f766e", background = "rgba(255,255,255,0.9)") {
-      const key = `${text}|${foreground}|${background}`;
-      if (textureCache.has(key)) return textureCache.get(key);
-      const canvas = document.createElement("canvas");
-      canvas.width = 256;
-      canvas.height = 128;
-      const ctx = canvas.getContext("2d");
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      ctx.fillStyle = background;
-      makeRoundRect(ctx, 14, 18, 228, 92, 30);
-      ctx.fill();
-      ctx.strokeStyle = foreground;
-      ctx.lineWidth = 7;
-      ctx.stroke();
-      ctx.fillStyle = foreground;
-      ctx.font = "800 54px 'Yu Gothic', Meiryo, sans-serif";
-      ctx.textAlign = "center";
-      ctx.textBaseline = "middle";
-      ctx.fillText(text || "す", 128, 65, 210);
-      const texture = new Three.CanvasTexture(canvas);
-      texture.anisotropy = 4;
-      textureCache.set(key, texture);
-      return texture;
-    }
-
-    function kanaSprite(text, color, scale = [0.78, 0.36]) {
-      const material = new Three.SpriteMaterial({
-        map: kanaTexture(text, color),
-        transparent: true,
-        depthWrite: false
-      });
-      const sprite = new Three.Sprite(material);
-      sprite.scale.set(scale[0], scale[1], 1);
-      return sprite;
-    }
-
-    function makeLimb(length, radius, color) {
-      const group = new Three.Group();
-      const mesh = new Three.Mesh(
-        new Three.CylinderGeometry(radius, radius, length, 14),
-        new Three.MeshStandardMaterial({ color, roughness: 0.55, metalness: 0.08 })
-      );
-      mesh.position.y = -length / 2;
-      group.add(mesh);
-      return group;
-    }
-
-    function makeJoint(radius, color) {
-      return new Three.Mesh(
-        new Three.SphereGeometry(radius, 18, 14),
-        new Three.MeshStandardMaterial({ color, roughness: 0.5, metalness: 0.06 })
-      );
-    }
-
-    function createKanaHumanScene(stage, data, index) {
-      const scene = new Three.Scene();
-      const camera = new Three.PerspectiveCamera(35, 1, 0.1, 20);
-      camera.position.set(0, 0.45, 5.1);
-      camera.lookAt(0, 0.15, 0);
-
-      const ambient = new Three.AmbientLight(0xffffff, 1.7);
-      const key = new Three.DirectionalLight(0xffffff, 2.2);
-      key.position.set(2.5, 3.4, 4.5);
-      scene.add(ambient, key);
-
-      const group = new Three.Group();
-      group.rotation.x = -0.08;
-      scene.add(group);
-
-      const kana = data.kana || "する";
-      const motionType = data.motionType || "walk";
-      const parts = kanaParts(kana);
-      const pose = poseFromKana(kana, motionType);
-      const accent = 0x0f766e;
-      const warm = 0xb45309;
-      const dark = 0x19212a;
-
-      const torso = makeLimb(0.86, 0.055, accent);
-      torso.position.set(0, 0.45, 0);
-      group.add(torso);
-
-      const head = makeJoint(0.19, 0xffffff);
-      head.material.color.setHex(0xffffff);
-      head.material.emissive = new Three.Color(0x042f2e);
-      head.material.emissiveIntensity = 0.02;
-      head.position.set(0, 1.15, 0);
-      group.add(head);
-
-      const leftArm = makeLimb(0.72, 0.045, accent);
-      const rightArm = makeLimb(0.72, 0.045, accent);
-      leftArm.position.set(-0.08, 0.78, 0);
-      rightArm.position.set(0.08, 0.78, 0);
-      group.add(leftArm, rightArm);
-
-      const leftLeg = makeLimb(0.78, 0.05, warm);
-      const rightLeg = makeLimb(0.78, 0.05, warm);
-      leftLeg.position.set(-0.08, 0.02, 0);
-      rightLeg.position.set(0.08, 0.02, 0);
-      group.add(leftLeg, rightLeg);
-
-      const headLabel = kanaSprite(parts[0], "#0f766e", [0.58, 0.28]);
-      headLabel.position.set(0, 1.15, 0.24);
-      group.add(headLabel);
-
-      const torsoLabel = kanaSprite(parts.slice(1, -1).join("") || parts[0], "#19212a", [0.82, 0.34]);
-      torsoLabel.position.set(0, 0.46, 0.25);
-      group.add(torsoLabel);
-
-      const handLabel = kanaSprite(parts[parts.length - 1] || kana, "#b45309", [0.48, 0.23]);
-      handLabel.position.set(0.62, 0.58, 0.24);
-      group.add(handLabel);
-
-      const feetLabel = kanaSprite(parts.length > 1 ? parts[parts.length - 1] : parts[0], "#b45309", [0.54, 0.24]);
-      feetLabel.position.set(-0.02, -0.72, 0.24);
-      group.add(feetLabel);
-
-      const outline = kanaSprite(kana, "rgba(15,118,110,0.72)", [1.72, 0.78]);
-      outline.material.opacity = 0.2;
-      outline.position.set(0, 0.38, -0.55);
-      scene.add(outline);
-
-      const prop = kanaSprite(propMarks[motionType] || "•", "#b45309", [0.38, 0.32]);
-      prop.position.set(1.0, 0.08, 0.2);
-      group.add(prop);
-
-      const floor = new Three.Mesh(
-        new Three.CircleGeometry(1.16, 38),
-        new Three.MeshBasicMaterial({ color: 0x0f766e, transparent: true, opacity: 0.1 })
-      );
-      floor.rotation.x = -Math.PI / 2;
-      floor.position.y = -0.92;
-      scene.add(floor);
-
-      const item = {
-        stage,
-        scene,
-        camera,
-        group,
-        motionType,
-        phase: index * 0.37 + kanaSignature(kana) * 0.003,
-        pose,
-        parts: { torso, head, leftArm, rightArm, leftLeg, rightLeg, headLabel, torsoLabel, handLabel, feetLabel, prop, outline }
-      };
-      setBasePose(item, 0);
-      return item;
-    }
-
-    function radians(degrees) {
-      return degrees * Math.PI / 180;
-    }
-
-    function setBasePose(item, wave) {
-      const { pose, parts } = item;
-      parts.torso.rotation.z = radians(pose.torso + wave * 3);
-      parts.leftArm.rotation.z = radians(pose.leftArm);
-      parts.rightArm.rotation.z = radians(pose.rightArm);
-      parts.leftLeg.rotation.z = radians(pose.leftLeg);
-      parts.rightLeg.rotation.z = radians(pose.rightLeg);
-      item.group.position.set(pose.x * 0.012, pose.y * 0.012 - 0.08, 0);
-    }
-
-    function animateKanaHuman(item, time) {
-      const t = time * 0.001 + item.phase;
-      const wave = Math.sin(t * 2.5);
-      const quick = Math.sin(t * 5.2);
-      const { parts, motionType, pose, group } = item;
-      setBasePose(item, wave);
-      group.rotation.y = wave * 0.25;
-      group.rotation.z = radians(wave * 2);
-      parts.head.scale.setScalar(1);
-      parts.prop.scale.setScalar(1 + Math.max(0, quick) * 0.12);
-      parts.outline.material.opacity = 0.16 + Math.abs(wave) * 0.07;
-
-      if (["walk", "go", "return", "run"].includes(motionType)) {
-        const stride = motionType === "run" ? 1.08 : 0.72;
-        parts.leftLeg.rotation.z = radians(pose.leftLeg + wave * 44 * stride);
-        parts.rightLeg.rotation.z = radians(pose.rightLeg - wave * 44 * stride);
-        parts.leftArm.rotation.z = radians(pose.leftArm - wave * 36 * stride);
-        parts.rightArm.rotation.z = radians(pose.rightArm + wave * 36 * stride);
-        group.position.x += wave * 0.13;
-        group.position.y += Math.abs(wave) * 0.06;
-      }
-
-      if (motionType === "dance") {
-        parts.leftArm.rotation.z = radians(pose.leftArm + quick * 26);
-        parts.rightArm.rotation.z = radians(pose.rightArm - quick * 26);
-        parts.leftLeg.rotation.z = radians(pose.leftLeg - wave * 28);
-        parts.rightLeg.rotation.z = radians(pose.rightLeg + wave * 28);
-        group.rotation.z = radians(wave * 14);
-        group.position.y += Math.abs(quick) * 0.08;
-      }
-
-      if (motionType === "open" || motionType === "close" || motionType === "gather") {
-        const direction = motionType === "close" ? -1 : 1;
-        parts.leftArm.rotation.z = radians(pose.leftArm - direction * wave * 26);
-        parts.rightArm.rotation.z = radians(pose.rightArm + direction * wave * 26);
-      }
-
-      if (["lift", "drop", "fly", "ride"].includes(motionType)) {
-        group.position.y += (motionType === "drop" ? -wave : Math.abs(wave)) * 0.16;
-        group.rotation.z = radians((motionType === "fly" ? 16 : 7) * wave);
-      }
-
-      if (["speak", "eat", "drink", "listen", "think", "laugh", "cry"].includes(motionType)) {
-        parts.head.scale.set(1 + Math.abs(quick) * 0.12, 1 - Math.abs(quick) * 0.05, 1);
-        parts.headLabel.scale.set(0.58 * (1 + Math.abs(quick) * 0.1), 0.28, 1);
-      }
-
-      if (["write", "cut", "fix", "help", "invite", "throw", "fish", "cook", "pay"].includes(motionType)) {
-        parts.rightArm.rotation.z = radians(pose.rightArm + quick * 34);
-        parts.handLabel.position.y = 0.58 + quick * 0.08;
-        parts.prop.position.x = 1.0 + wave * 0.18;
-        parts.prop.position.y = 0.1 + Math.abs(quick) * 0.2;
-      }
-
-      if (motionType === "search") {
-        parts.rightArm.rotation.z = radians(pose.rightArm + wave * 22);
-        group.rotation.y = wave * 0.55;
-      }
-
-      if (motionType === "sleep") {
-        group.rotation.z = radians(-18 + wave * 4);
-        group.position.y -= 0.08;
-        parts.prop.position.set(0.82 + wave * 0.1, 1.15 + Math.abs(wave) * 0.18, 0.25);
-      }
-
-      if (["break", "turn"].includes(motionType)) {
-        group.rotation.y = wave * 0.8;
-        group.rotation.z = radians(quick * 8);
-      }
-
-      if (["shine", "bloom"].includes(motionType)) {
-        parts.prop.scale.setScalar(1 + Math.abs(wave) * 0.35);
-        parts.prop.position.y = 0.35 + Math.abs(wave) * 0.35;
-      }
-    }
-
-    function resizeThreeCanvas() {
-      const width = window.innerWidth;
-      const height = window.innerHeight;
-      if (width === lastViewportWidth && height === lastViewportHeight) return;
-      lastViewportWidth = width;
-      lastViewportHeight = height;
-      threeRenderer.setSize(width, height, false);
-    }
-
-    function renderThreeScenes(time = 0) {
-      if (!Three || !threeRenderer) return;
-      resizeThreeCanvas();
-      threeRenderer.setScissorTest(false);
-      threeRenderer.clear(true, true, true);
-      threeRenderer.setScissorTest(true);
-      const canvasHeight = threeCanvas.clientHeight;
-      threeItems.forEach((item) => {
-        const rect = item.stage.getBoundingClientRect();
-        if (rect.bottom < 0 || rect.top > window.innerHeight || rect.right < 0 || rect.left > window.innerWidth) return;
-        const left = Math.max(0, Math.floor(rect.left));
-        const bottom = Math.max(0, Math.floor(canvasHeight - rect.bottom));
-        const width = Math.max(1, Math.floor(rect.width));
-        const height = Math.max(1, Math.floor(rect.height));
-        item.camera.aspect = width / height;
-        item.camera.updateProjectionMatrix();
-        animateKanaHuman(item, time);
-        threeRenderer.setViewport(left, bottom, width, height);
-        threeRenderer.setScissor(left, bottom, width, height);
-        threeRenderer.render(item.scene, item.camera);
-      });
+      stage.style.setProperty("--kid-x", `${pose.x}px`);
+      stage.style.setProperty("--kid-y", `${pose.y}px`);
+      stage.style.setProperty("--face-tilt", `${pose.face}deg`);
+      scene.querySelector(".pose-kanji").textContent = motion.kanji;
+      scene.querySelector(".pose-meaning").textContent = verb.kana;
+      scene.querySelector(".meaning-prop").textContent = motion.prop;
+      scene.querySelector(".scene-sfx").textContent = meta.sfx;
+      scene.querySelector(".motion-caption").innerHTML = `<strong>${meta.title}</strong><span>${meta.scene}</span><em>${phrase} | reading: ${verb.kana}</em>`;
     }
 
     function render() {
@@ -3548,7 +3386,6 @@
       grid.appendChild(fragment);
       count.textContent = `${visibleVerbs.length} of ${verbs.length} verbs`;
       empty.classList.toggle("show", visibleVerbs.length === 0);
-      mountThreeScenes();
     }
 
     levelButtons.forEach((button) => {
